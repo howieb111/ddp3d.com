@@ -127,6 +127,9 @@
       <h2>Get in touch</h2>
       <p>Tell us about your sanctuary and we'll follow up by email or phone — pricing is above, and we'll invoice you directly once we arrange a prototype.</p>
     </div>
+    <div id="form-sent-banner" style="display:none; background:#e8f3ea; border:1px solid #3f7a4a; color:#1e4d28; border-radius:8px; padding:16px 20px; margin-bottom:24px; font-weight:600;">
+      Thanks — your message went through. We'll follow up by email or phone, and you'll get a secure Stripe invoice to pay once things are confirmed. Keep an eye on your inbox (and spam folder).
+    </div>
     <form class="form" action="https://formsubmit.co/sales@ddp3d.com" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="_subject" value="Hymnal Rack Mounted Pencil and Card Holders — inquiry">
       <input type="hidden" name="_next" value="https://ddp3d.com/hymnal-pencil-card.html?sent=1">
@@ -239,6 +242,20 @@
       document.querySelectorAll('.nav-item.open').forEach(function (item) { item.classList.remove('open'); });
     }
   });
+</script>
+<script>
+  (function () {
+    if (window.location.search.indexOf('sent=1') !== -1) {
+      var banner = document.getElementById('form-sent-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      if (window.history && window.history.replaceState) {
+        window.history.replaceState(null, '', window.location.pathname);
+      }
+    }
+  })();
 </script>
 
 </body>
