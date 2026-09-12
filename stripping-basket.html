@@ -168,9 +168,17 @@
       </div>
       <div class="form-field form-checkbox">
         <label for="b-leg"><input type="checkbox" id="b-leg" name="Leg strap add-on" value="Yes, add leg strap ($5)"> Add leg strap, $5 — for fishing seated in a boat or on-shore</label>
+        <div id="b-leg-qty-wrap" style="display:none; margin-top:8px;">
+          <label for="b-leg-qty" style="font-weight:normal;">How many need a leg strap?</label>
+          <input type="number" id="b-leg-qty" name="Leg strap quantity" min="1">
+        </div>
       </div>
       <div class="form-field form-checkbox" id="b-shoulder-wrap" style="display:none;">
         <label for="b-shoulder"><input type="checkbox" id="b-shoulder" name="Shoulder strap add-on" value="Yes, add shoulder strap ($10)"> Add shoulder strap, $10 — Surf only</label>
+        <div id="b-shoulder-qty-wrap" style="display:none; margin-top:8px;">
+          <label for="b-shoulder-qty" style="font-weight:normal;">How many need a shoulder strap?</label>
+          <input type="number" id="b-shoulder-qty" name="Shoulder strap quantity" min="1">
+        </div>
       </div>
       <div class="form-field">
         <label for="b-address">Shipping address</label>
@@ -333,6 +341,24 @@
         updateShoulderVisibility();
       });
     });
+
+    var qtyField = document.getElementById('b-qty');
+    function wireStrapQty(checkboxId, wrapId, fieldId) {
+      var checkbox = document.getElementById(checkboxId);
+      var wrap = document.getElementById(wrapId);
+      var field = document.getElementById(fieldId);
+      if (!checkbox || !wrap || !field) return;
+      checkbox.addEventListener('change', function () {
+        if (checkbox.checked) {
+          wrap.style.display = '';
+          field.value = qtyField.value || 1;
+        } else {
+          wrap.style.display = 'none';
+        }
+      });
+    }
+    wireStrapQty('b-leg', 'b-leg-qty-wrap', 'b-leg-qty');
+    wireStrapQty('b-shoulder', 'b-shoulder-qty-wrap', 'b-shoulder-qty');
   })();
 </script>
 <script>
