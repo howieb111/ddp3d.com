@@ -121,7 +121,7 @@
     <div id="form-sent-banner" style="display:none; background:#e8f3ea; border:1px solid #3f7a4a; color:#1e4d28; border-radius:8px; padding:16px 20px; margin-bottom:24px; font-weight:600;">
       Thanks — your request went through. We'll follow up by email or phone, and you'll get a secure Stripe invoice to pay once things are confirmed. Keep an eye on your inbox (and spam folder).
     </div>
-    <form class="form" action="https://formsubmit.co/sales@ddp3d.com" method="POST" enctype="multipart/form-data">
+    <form class="form" id="basket-form" action="https://formsubmit.co/sales@ddp3d.com" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="_subject" value="Fly-Fishing Stripping Basket — order request">
       <input type="hidden" name="_next" value="https://ddp3d.com/stripping-basket.html?sent=1">
       <input type="hidden" name="_webhook" value="https://ddp3d-order-automation.howard-bernstein.workers.dev">
@@ -133,53 +133,23 @@
           <input type="text" id="b-name" name="Name" required>
         </div>
         <div class="form-field">
-          <label for="b-qty">Quantity</label>
-          <input type="number" id="b-qty" name="Quantity" min="1" value="1" required>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-field">
           <label for="b-email">Email</label>
           <input type="email" id="b-email" name="Email" required>
         </div>
+      </div>
+      <div class="form-row">
         <div class="form-field">
           <label for="b-phone">Phone</label>
           <input type="tel" id="b-phone" name="Phone">
         </div>
       </div>
-      <div class="form-row">
-        <div class="form-field">
-          <label for="b-size">Basket size</label>
-          <select id="b-size" name="Basket size" required>
-            <option value="">Select...</option>
-            <option value="Flats — $40">Flats — $40</option>
-            <option value="Wader — $50">Wader — $50</option>
-            <option value="Surf — $70">Surf — $70</option>
-          </select>
-        </div>
-        <div class="form-field">
-          <label for="b-color">Color</label>
-          <select id="b-color" name="Color" required>
-            <option value="">Select...</option>
-            <option value="Green">Green</option>
-            <option value="Gray">Gray</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-field form-checkbox">
-        <label for="b-leg"><input type="checkbox" id="b-leg" name="Leg strap add-on" value="Yes, add leg strap ($5)"> Add leg strap, $5 — for fishing seated in a boat or on-shore</label>
-        <div id="b-leg-qty-wrap" style="display:none; margin-top:8px;">
-          <label for="b-leg-qty" style="font-weight:normal;">How many need a leg strap?</label>
-          <input type="number" id="b-leg-qty" name="Leg strap quantity" min="1">
-        </div>
-      </div>
-      <div class="form-field form-checkbox" id="b-shoulder-wrap" style="display:none;">
-        <label for="b-shoulder"><input type="checkbox" id="b-shoulder" name="Shoulder strap add-on" value="Yes, add shoulder strap ($10)"> Add shoulder strap, $10 — Surf only</label>
-        <div id="b-shoulder-qty-wrap" style="display:none; margin-top:8px;">
-          <label for="b-shoulder-qty" style="font-weight:normal;">How many need a shoulder strap?</label>
-          <input type="number" id="b-shoulder-qty" name="Shoulder strap quantity" min="1">
-        </div>
-      </div>
+
+      <div id="basket-lines"></div>
+
+      <p><a href="#" id="basket-add-line">+ Add another basket</a></p>
+
+      <div id="basket-total" class="form-field" style="font-weight:600;">Estimated total: $0</div>
+
       <div class="form-field">
         <label for="b-address">Shipping address</label>
         <textarea id="b-address" name="Shipping address" placeholder="Street, city, state, ZIP" required></textarea>
@@ -188,8 +158,9 @@
         <label for="b-notes">Notes</label>
         <textarea id="b-notes" name="Notes" placeholder="Anything else we should know"></textarea>
       </div>
-      <div class="form-submit">
-        <button type="submit" class="btn btn-terracotta">Request your basket →</button>
+      <div class="form-submit" style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+        <button type="submit" class="btn btn-terracotta">Request your basket(s) →</button>
+        <button type="button" id="basket-start-over" class="btn btn-ghost">Start over</button>
       </div>
       <p class="form-note">This submits a request, not an order — no payment details are collected here. We'll review it and email you a secure Stripe invoice to pay, usually within a few business days. Check your inbox (and your spam folder, just in case) for an email from Stripe.</p>
     </form>
@@ -326,39 +297,172 @@
       }
     }
 
-    var sizeField = document.getElementById('b-size');
-    var shoulderWrap = document.getElementById('b-shoulder-wrap');
-    if (!sizeField) return;
+    var linesContainer = document.getElementById('basket-lines');
+    var totalEl = document.getElementById('basket-total');
+    var addLineLink = document.getElementById('basket-add-line');
+    var startOverBtn = document.getElementById('basket-start-over');
+    var basketForm = document.getElementById('basket-form');
+    if (!linesContainer || !basketForm) return;
 
-    function updateShoulderVisibility() {
-      shoulderWrap.style.display = sizeField.value.indexOf('Surf') === 0 ? '' : 'none';
+    var BASKET_PRICES = { 'Flats — $40': 40, 'Wader — $50': 50, 'Surf — $70': 70 };
+    var lineCount = 0;
+
+    function lineTemplate(n) {
+      return '' +
+        '<div class="basket-line" data-line="' + n + '" style="border:1px solid #d8d3c8; border-radius:10px; padding:16px; margin-bottom:16px;">' +
+          '<div class="form-row">' +
+            '<div class="form-field">' +
+              '<label for="b-size-' + n + '">Basket size</label>' +
+              '<select id="b-size-' + n + '" name="Basket ' + n + ' size" class="basket-size-field" required>' +
+                '<option value="">Select...</option>' +
+                '<option value="Flats — $40">Flats — $40</option>' +
+                '<option value="Wader — $50">Wader — $50</option>' +
+                '<option value="Surf — $70">Surf — $70</option>' +
+              '</select>' +
+            '</div>' +
+            '<div class="form-field">' +
+              '<label for="b-qty-' + n + '">Quantity</label>' +
+              '<input type="number" id="b-qty-' + n + '" name="Basket ' + n + ' quantity" min="1" value="1" class="basket-qty-field" required>' +
+            '</div>' +
+            '<div class="form-field">' +
+              '<label for="b-color-' + n + '">Color</label>' +
+              '<select id="b-color-' + n + '" name="Basket ' + n + ' color" required>' +
+                '<option value="">Select...</option>' +
+                '<option value="Green">Green</option>' +
+                '<option value="Gray">Gray</option>' +
+              '</select>' +
+            '</div>' +
+          '</div>' +
+          '<div class="form-field form-checkbox">' +
+            '<label><input type="checkbox" name="Basket ' + n + ' leg strap" value="Yes, add leg strap ($5)" class="basket-leg-checkbox"> Add leg strap, $5 — for fishing seated in a boat or on-shore</label>' +
+            '<div class="leg-qty-wrap" style="display:none; margin-top:8px;">' +
+              '<label style="font-weight:normal;">How many need a leg strap?</label>' +
+              '<input type="number" name="Basket ' + n + ' leg strap quantity" min="1" class="basket-leg-qty-field">' +
+            '</div>' +
+          '</div>' +
+          '<div class="form-field form-checkbox shoulder-wrap" style="display:none;">' +
+            '<label><input type="checkbox" name="Basket ' + n + ' shoulder strap" value="Yes, add shoulder strap ($10)" class="basket-shoulder-checkbox"> Add shoulder strap, $10 — Surf only</label>' +
+            '<div class="shoulder-qty-wrap" style="display:none; margin-top:8px;">' +
+              '<label style="font-weight:normal;">How many need a shoulder strap?</label>' +
+              '<input type="number" name="Basket ' + n + ' shoulder strap quantity" min="1" class="basket-shoulder-qty-field">' +
+            '</div>' +
+          '</div>' +
+        '</div>';
     }
-    sizeField.addEventListener('change', updateShoulderVisibility);
+
+    function updateShoulderForLine(lineEl) {
+      var sizeField = lineEl.querySelector('.basket-size-field');
+      var shoulderWrap = lineEl.querySelector('.shoulder-wrap');
+      var isSurf = sizeField.value.indexOf('Surf') === 0;
+      shoulderWrap.style.display = isSurf ? '' : 'none';
+      if (!isSurf) {
+        lineEl.querySelector('.basket-shoulder-checkbox').checked = false;
+        lineEl.querySelector('.shoulder-qty-wrap').style.display = 'none';
+      }
+    }
+
+    function updateTotal() {
+      var total = 0;
+      linesContainer.querySelectorAll('.basket-line').forEach(function (lineEl) {
+        var size = lineEl.querySelector('.basket-size-field').value;
+        var qty = parseInt(lineEl.querySelector('.basket-qty-field').value, 10) || 0;
+        total += (BASKET_PRICES[size] || 0) * qty;
+
+        if (lineEl.querySelector('.basket-leg-checkbox').checked) {
+          total += (parseInt(lineEl.querySelector('.basket-leg-qty-field').value, 10) || 0) * 5;
+        }
+        if (lineEl.querySelector('.basket-shoulder-checkbox').checked) {
+          total += (parseInt(lineEl.querySelector('.basket-shoulder-qty-field').value, 10) || 0) * 10;
+        }
+      });
+      totalEl.textContent = 'Estimated total: $' + total.toFixed(2).replace(/\.00$/, '');
+    }
+
+    function addLine(presetSize) {
+      lineCount += 1;
+      var wrapper = document.createElement('div');
+      wrapper.innerHTML = lineTemplate(lineCount);
+      var lineEl = wrapper.firstChild;
+      linesContainer.appendChild(lineEl);
+      if (presetSize) {
+        lineEl.querySelector('.basket-size-field').value = presetSize;
+        updateShoulderForLine(lineEl);
+      }
+      updateTotal();
+      return lineEl;
+    }
+
+    linesContainer.addEventListener('change', function (e) {
+      var lineEl = e.target.closest('.basket-line');
+      if (!lineEl) return;
+      var qtyField = lineEl.querySelector('.basket-qty-field');
+
+      if (e.target.classList.contains('basket-size-field')) {
+        updateShoulderForLine(lineEl);
+      }
+      if (e.target.classList.contains('basket-leg-checkbox')) {
+        var legWrap = lineEl.querySelector('.leg-qty-wrap');
+        if (e.target.checked) {
+          legWrap.style.display = '';
+          lineEl.querySelector('.basket-leg-qty-field').value = qtyField.value || 1;
+        } else {
+          legWrap.style.display = 'none';
+        }
+      }
+      if (e.target.classList.contains('basket-shoulder-checkbox')) {
+        var shoulderWrapQty = lineEl.querySelector('.shoulder-qty-wrap');
+        if (e.target.checked) {
+          shoulderWrapQty.style.display = '';
+          lineEl.querySelector('.basket-shoulder-qty-field').value = qtyField.value || 1;
+        } else {
+          shoulderWrapQty.style.display = 'none';
+        }
+      }
+      updateTotal();
+    });
+
+    linesContainer.addEventListener('input', function (e) {
+      if (
+        e.target.classList.contains('basket-qty-field') ||
+        e.target.classList.contains('basket-leg-qty-field') ||
+        e.target.classList.contains('basket-shoulder-qty-field')
+      ) {
+        updateTotal();
+      }
+    });
+
+    if (addLineLink) {
+      addLineLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        addLine();
+      });
+    }
+
+    if (startOverBtn) {
+      startOverBtn.addEventListener('click', function () {
+        if (!window.confirm('Start over and clear this form?')) return;
+        basketForm.reset();
+        linesContainer.innerHTML = '';
+        lineCount = 0;
+        addLine();
+      });
+    }
 
     document.querySelectorAll('[data-basket-select]').forEach(function (link) {
       link.addEventListener('click', function () {
-        sizeField.value = this.getAttribute('data-basket-select');
-        updateShoulderVisibility();
+        var preset = this.getAttribute('data-basket-select');
+        var firstLine = linesContainer.querySelector('.basket-line');
+        if (firstLine && !firstLine.querySelector('.basket-size-field').value) {
+          firstLine.querySelector('.basket-size-field').value = preset;
+          updateShoulderForLine(firstLine);
+          updateTotal();
+        } else {
+          addLine(preset);
+        }
       });
     });
 
-    var qtyField = document.getElementById('b-qty');
-    function wireStrapQty(checkboxId, wrapId, fieldId) {
-      var checkbox = document.getElementById(checkboxId);
-      var wrap = document.getElementById(wrapId);
-      var field = document.getElementById(fieldId);
-      if (!checkbox || !wrap || !field) return;
-      checkbox.addEventListener('change', function () {
-        if (checkbox.checked) {
-          wrap.style.display = '';
-          field.value = qtyField.value || 1;
-        } else {
-          wrap.style.display = 'none';
-        }
-      });
-    }
-    wireStrapQty('b-leg', 'b-leg-qty-wrap', 'b-leg-qty');
-    wireStrapQty('b-shoulder', 'b-shoulder-qty-wrap', 'b-shoulder-qty');
+    addLine();
   })();
 </script>
 <script>
