@@ -118,9 +118,13 @@
       <h2>Request your basket</h2>
       <p>Submit your order details below. This isn't an instant checkout — no payment happens on this form. We'll review it and email you a secure Stripe invoice to pay.</p>
     </div>
+    <div id="form-sent-banner" style="display:none; background:#e8f3ea; border:1px solid #3f7a4a; color:#1e4d28; border-radius:8px; padding:16px 20px; margin-bottom:24px; font-weight:600;">
+      Thanks — your request went through. We'll follow up by email or phone, and you'll get a secure Stripe invoice to pay once things are confirmed. Keep an eye on your inbox (and spam folder).
+    </div>
     <form class="form" action="https://formsubmit.co/sales@ddp3d.com" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="_subject" value="Fly-Fishing Stripping Basket — order request">
       <input type="hidden" name="_next" value="https://ddp3d.com/stripping-basket.html?sent=1">
+      <input type="hidden" name="_captcha" value="false">
       <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
       <div class="form-row">
         <div class="form-field">
@@ -298,6 +302,17 @@
 </script>
 <script>
   (function () {
+    if (window.location.search.indexOf('sent=1') !== -1) {
+      var banner = document.getElementById('form-sent-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      if (window.history && window.history.replaceState) {
+        window.history.replaceState(null, '', window.location.pathname);
+      }
+    }
+
     var sizeField = document.getElementById('b-size');
     var shoulderWrap = document.getElementById('b-shoulder-wrap');
     if (!sizeField) return;
