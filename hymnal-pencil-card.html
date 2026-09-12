@@ -263,6 +263,19 @@
     }
   })();
 </script>
+<script>
+  (function () {
+    var form = document.querySelector('#contact-form form');
+    if (!form) return;
+    form.addEventListener('submit', function () {
+      var subjectField = form.querySelector('input[name="_subject"]');
+      var orgField = document.getElementById('q-org');
+      var nameField = document.getElementById('q-name');
+      var label = (orgField && orgField.value.trim()) || (nameField && nameField.value.trim()) || 'New inquiry';
+      subjectField.value = label + ' — PCH';
+    });
+  })();
+</script>
 
 </body>
 </html>

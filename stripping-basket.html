@@ -335,6 +335,18 @@
     });
   })();
 </script>
+<script>
+  (function () {
+    var form = document.querySelector('#basket-request-form form');
+    if (!form) return;
+    form.addEventListener('submit', function () {
+      var subjectField = form.querySelector('input[name="_subject"]');
+      var nameField = document.getElementById('b-name');
+      var name = (nameField && nameField.value.trim()) || 'New request';
+      subjectField.value = name + ' — SB';
+    });
+  })();
+</script>
 
 </body>
 </html>
