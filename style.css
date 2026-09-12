@@ -271,6 +271,11 @@ a:hover { text-decoration: underline; }
   gap: 22px;
 }
 
+.basket-size-grid { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 600px) {
+  .basket-size-grid { grid-template-columns: 1fr; }
+}
+
 .card {
   background: #fff;
   border: 1px solid rgba(140, 136, 128, 0.25);

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fly-Fishing Stripping Basket — ddp3d</title>
-<meta name="description" content="A rugged, 3D-printed stripping basket for fly fishing from ddp3d, in three wall heights. Order direct.">
+<meta name="description" content="A rugged, 3D-printed stripping basket for fly fishing from ddp3d, in three wall heights. Request yours direct.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -70,7 +70,7 @@
       <p class="card-colors">Colors: green &middot; gray — blue planned for later</p>
       <div class="product-buy">
         <a class="btn btn-terracotta" href="#wall-heights">Choose your basket &amp; pricing ↓</a>
-        <span class="note">From $40</span>
+        <span class="note">From $40 &middot; request to order</span>
       </div>
     </div>
   </div>
@@ -82,33 +82,104 @@
       <h2>Choose the basket that suits your needs</h2>
       <p>Same basket, three wall heights — pick the one that matches how and where you fish.</p>
     </div>
-    <div class="grid">
+    <div class="grid basket-size-grid">
       <article class="card">
         <h3>Flats</h3>
         <p>No wall, lowest profile. Built for calm water and flats fishing where you want the basket to disappear.</p>
-        <p class="card-colors">7.1 oz &middot; color choice at checkout</p>
+        <p class="card-colors">7.1 oz &middot; color choice on request</p>
         <p class="price">$40</p>
         <p class="card-colors">+ optional leg strap, $5 — for fishing seated in a boat or on-shore</p>
-        <a class="card-link" href="https://buy.stripe.com/test_9B69AS8k08NBcmQ1RMds400">Buy now →</a>
+        <a class="card-link" href="#basket-request-form" data-basket-select="Flats — $40">Request this basket →</a>
       </article>
       <article class="card">
         <h3>Wader</h3>
         <p>Low wall for all-around containment — wading and boat use. The one most anglers should start with.</p>
-        <p class="card-colors">12.25 oz &middot; color choice at checkout</p>
+        <p class="card-colors">12.25 oz &middot; color choice on request</p>
         <p class="price">$50</p>
         <p class="card-colors">+ optional leg strap, $5 — for fishing seated in a boat or on-shore</p>
-        <a class="card-link" href="https://buy.stripe.com/test_14A14m9o46Ft86Acwqds401">Buy now →</a>
+        <a class="card-link" href="#basket-request-form" data-basket-select="Wader — $50">Request this basket →</a>
       </article>
       <article class="card">
         <h3>Surf</h3>
         <p>High wall for maximum line control in surf, wind, and big water.</p>
-        <p class="card-colors">15.9 oz &middot; color choice at checkout</p>
+        <p class="card-colors">15.9 oz &middot; color choice on request</p>
         <p class="price">$70</p>
         <p class="card-colors">+ optional leg strap, $5 — for fishing seated in a boat or on-shore</p>
         <p class="card-colors">+ optional shoulder strap, $10 — if you're not using it in heavy surf</p>
-        <a class="card-link" href="https://buy.stripe.com/test_3cI00ias8bZNeuYeEyds402">Buy now →</a>
+        <a class="card-link" href="#basket-request-form" data-basket-select="Surf — $70">Request this basket →</a>
       </article>
     </div>
+  </div>
+</section>
+
+<section class="section" id="basket-request-form">
+  <div class="wrap wrap-narrow">
+    <div class="section-head">
+      <h2>Request your basket</h2>
+      <p>Submit your order details below. This isn't an instant checkout — no payment happens on this form. We'll review it and email you a secure Stripe invoice to pay.</p>
+    </div>
+    <form class="form" action="https://formsubmit.co/sales@ddp3d.com" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="_subject" value="Fly-Fishing Stripping Basket — order request">
+      <input type="hidden" name="_next" value="https://ddp3d.com/stripping-basket.html?sent=1">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+      <div class="form-row">
+        <div class="form-field">
+          <label for="b-name">Name</label>
+          <input type="text" id="b-name" name="Name" required>
+        </div>
+        <div class="form-field">
+          <label for="b-qty">Quantity</label>
+          <input type="number" id="b-qty" name="Quantity" min="1" value="1" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="b-email">Email</label>
+          <input type="email" id="b-email" name="Email" required>
+        </div>
+        <div class="form-field">
+          <label for="b-phone">Phone</label>
+          <input type="tel" id="b-phone" name="Phone">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="b-size">Basket size</label>
+          <select id="b-size" name="Basket size" required>
+            <option value="">Select...</option>
+            <option value="Flats — $40">Flats — $40</option>
+            <option value="Wader — $50">Wader — $50</option>
+            <option value="Surf — $70">Surf — $70</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="b-color">Color</label>
+          <select id="b-color" name="Color" required>
+            <option value="">Select...</option>
+            <option value="Green">Green</option>
+            <option value="Gray">Gray</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-field form-checkbox">
+        <label for="b-leg"><input type="checkbox" id="b-leg" name="Leg strap add-on" value="Yes, add leg strap ($5)"> Add leg strap, $5 — for fishing seated in a boat or on-shore</label>
+      </div>
+      <div class="form-field form-checkbox" id="b-shoulder-wrap" style="display:none;">
+        <label for="b-shoulder"><input type="checkbox" id="b-shoulder" name="Shoulder strap add-on" value="Yes, add shoulder strap ($10)"> Add shoulder strap, $10 — Surf only</label>
+      </div>
+      <div class="form-field">
+        <label for="b-address">Shipping address</label>
+        <textarea id="b-address" name="Shipping address" placeholder="Street, city, state, ZIP" required></textarea>
+      </div>
+      <div class="form-field">
+        <label for="b-notes">Notes</label>
+        <textarea id="b-notes" name="Notes" placeholder="Anything else we should know"></textarea>
+      </div>
+      <div class="form-submit">
+        <button type="submit" class="btn btn-terracotta">Request your basket →</button>
+      </div>
+      <p class="form-note">This submits a request, not an order — no payment details are collected here. We'll review it and email you a secure Stripe invoice to pay, usually within a few business days. Check your inbox (and your spam folder, just in case) for an email from Stripe.</p>
+    </form>
   </div>
 </section>
 
@@ -151,7 +222,7 @@
       <tr><td>Belt</td><td>Polyester, black, fits 32"–48" waist (adjustable)</td></tr>
       <tr><td>Add-ons</td><td>Leg strap, $5 (all sizes) &middot; shoulder strap with sternum clip and quick-release, $10 (Surf only)</td></tr>
       <tr><td>Drain time</td><td>~1.35 seconds, chamfered drain holes</td></tr>
-      <tr><td>Colors available</td><td>Green, gray (selected at checkout)</td></tr>
+      <tr><td>Colors available</td><td>Green, gray (selected when you request your basket)</td></tr>
       <tr><td>Care</td><td>Rinse with fresh water after saltwater use; air dry.</td></tr>
     </table>
   </div>
@@ -224,6 +295,25 @@
       document.querySelectorAll('.nav-item.open').forEach(function (item) { item.classList.remove('open'); });
     }
   });
+</script>
+<script>
+  (function () {
+    var sizeField = document.getElementById('b-size');
+    var shoulderWrap = document.getElementById('b-shoulder-wrap');
+    if (!sizeField) return;
+
+    function updateShoulderVisibility() {
+      shoulderWrap.style.display = sizeField.value.indexOf('Surf') === 0 ? '' : 'none';
+    }
+    sizeField.addEventListener('change', updateShoulderVisibility);
+
+    document.querySelectorAll('[data-basket-select]').forEach(function (link) {
+      link.addEventListener('click', function () {
+        sizeField.value = this.getAttribute('data-basket-select');
+        updateShoulderVisibility();
+      });
+    });
+  })();
 </script>
 
 </body>
