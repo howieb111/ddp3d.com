@@ -55,7 +55,12 @@
 
   <div class="product-hero">
     <div>
-      <div class="gallery-main"><img src="assets/hymnal-card.jpg" alt="Hymnal Rack Mounted Pencil and Card Holders on a pew"></div>
+      <div class="gallery-main" id="gallery-main"><img src="assets/pch-1.jpg" alt="Hymnal Rack Mounted Pencil and Card Holder mounted on a pew hymnal rack, empty"></div>
+      <div class="gallery-strip gallery-strip-clickable">
+        <div class="gallery-thumb"><img src="assets/pch-2.jpg" alt="Hymnal Rack Mounted Pencil and Card Holder loaded with pencils and a card"></div>
+        <div class="gallery-thumb"><img src="assets/pch-3.jpg" alt="Close-up of pencils and a card in the Hymnal Rack Mounted Pencil and Card Holder"></div>
+        <div class="gallery-thumb"><img src="assets/pch-4.jpg" alt="Front angle of the Hymnal Rack Mounted Pencil and Card Holder mounted on a pew"></div>
+      </div>
     </div>
     <div>
       <div class="card-tag tag-category">Furnishings &amp; Display</div>
@@ -276,6 +281,26 @@
       var nameField = document.getElementById('q-name');
       var label = (orgField && orgField.value.trim()) || (nameField && nameField.value.trim()) || 'New inquiry';
       subjectField.value = label + ' — PCH';
+    });
+  })();
+</script>
+<script>
+  (function () {
+    var main = document.getElementById('gallery-main');
+    if (!main) return;
+    var thumbs = document.querySelectorAll('.gallery-strip-clickable .gallery-thumb');
+    thumbs.forEach(function (thumb) {
+      thumb.addEventListener('click', function () {
+        thumbs.forEach(function (t) { t.classList.remove('active'); });
+        thumb.classList.add('active');
+        var video = thumb.getAttribute('data-video');
+        if (video) {
+          main.innerHTML = '<video src="' + video + '" controls autoplay muted playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>';
+        } else {
+          var img = thumb.querySelector('img');
+          main.innerHTML = '<img src="' + img.getAttribute('src') + '" alt="' + img.getAttribute('alt').replace(/"/g, '&quot;') + '">';
+        }
+      });
     });
   })();
 </script>
