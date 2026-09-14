@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Confirmed — ddp3d</title>
+<meta name="description" content="Thanks for your order from ddp3d.">
+<link rel="canonical" href="https://ddp3d.com/cart-success.html">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-top">
+    <a href="index.html" class="wordmark"><img src="assets/ddp3d-logo.png" alt="ddp3d — Design, Develop, Print"></a>
+    <a href="cart.html" class="cart-link" aria-label="View cart">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+      <span class="cart-badge" id="cart-badge"></span>
+    </a>
+  </div>
+</header>
+
+<section class="section">
+  <div class="wrap wrap-narrow" style="text-align:center;">
+    <h1>Thanks for your order!</h1>
+    <p>Your payment went through and your order is confirmed. You'll get a receipt by email from Stripe, and we'll follow up with shipping details.</p>
+    <div class="hero-actions" style="justify-content:center;">
+      <a href="products.html" class="btn btn-terracotta">Continue shopping →</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer" id="contact">
+  <div class="wrap">
+    <nav class="footer-nav">
+      <a href="products.html">Products</a>
+      <a href="open-source.html">Open Source</a>
+      <a href="about.html">About</a>
+      <a href="returns.html">Returns</a>
+    </nav>
+    <div class="contact-list">
+      <div class="contact-group">
+        <a class="contact-email" href="tel:+17812264198">781-226-4198</a>
+        <span class="role">Call or text</span>
+      </div>
+      <div class="contact-group">
+        <a class="contact-email" href="mailto:info@ddp3d.com">info@ddp3d.com</a>
+        <span class="role">General inquiries</span>
+      </div>
+      <div class="contact-group">
+        <a class="contact-email" href="mailto:sales@ddp3d.com">sales@ddp3d.com</a>
+        <span class="role">Orders &amp; product questions</span>
+      </div>
+      <div class="contact-group">
+        <a class="contact-email" href="mailto:support@ddp3d.com">support@ddp3d.com</a>
+        <span class="role">Help with an existing order</span>
+      </div>
+    </div>
+    <p style="margin-top:24px;">&copy; <span id="year"></span> ddp3d. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="assets/cart.js"></script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+
+</body>
+</html>

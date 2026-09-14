@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Cart — ddp3d</title>
+<meta name="description" content="Review your ddp3d cart and check out securely with Stripe.">
+<link rel="canonical" href="https://ddp3d.com/cart.html">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-top">
+    <a href="index.html" class="wordmark"><img src="assets/ddp3d-logo.png" alt="ddp3d — Design, Develop, Print"></a>
+    <a href="cart.html" class="cart-link" aria-label="View cart">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+      <span class="cart-badge" id="cart-badge"></span>
+    </a>
+  </div>
+  <div class="wrap header-nav-row">
+    <nav class="main-nav">
+      <div class="nav-item">
+        <a href="products.html" class="nav-link">Products<span class="nav-caret" aria-hidden="true">▾</span></a>
+        <div class="nav-dropdown"><div class="nav-dropdown-inner">
+          <a href="stripping-basket.html">Fly-Fishing Stripping Basket</a>
+          <a href="hymnal-pencil-card.html">Hymnal Rack Mounted Pencil and Card Holders</a>
+          <a href="custom-projects.html">Custom Design, Development &amp; Printing</a>
+          <div class="nav-cat-label">Coming Soon</div>
+          <span class="disabled">Bicycle Flag Mount</span>
+          <span class="disabled">Bike Rack Wheel Cradle</span>
+          <span class="disabled">Hymnal Rack Tri-Fold Holder</span>
+          <span class="disabled">E-Drum Accessory Holder</span>
+          <span class="disabled">GE Thermostat Cover</span>
+          <a href="products.html" class="view-all">View all products →</a>
+        </div></div>
+      </div>
+      <div class="nav-item">
+        <a href="open-source.html" class="nav-link">Open Source<span class="nav-caret" aria-hidden="true">▾</span></a>
+        <div class="nav-dropdown"><div class="nav-dropdown-inner">
+          <a href="glassy-mcbuildplate.html">Glass &amp; Build Plate Holder</a>
+          <a href="fero-no-sticker.html">Fero-No-Sticker Mount</a>
+          <a href="holy-grail-desiccant.html">Holy Grail Desiccant Containers</a>
+          <a href="open-source.html#exhaust-system">Printer Exhaust System</a>
+          <a href="open-source.html" class="view-all">View all free files →</a>
+        </div></div>
+      </div>
+      <div class="nav-item"><a href="about.html" class="nav-link">About</a></div>
+      <div class="nav-item"><a href="index.html#contact" class="nav-link">Contact</a></div>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <p class="breadcrumb">Your Cart</p>
+</div>
+
+<section class="section" style="padding-top:16px;">
+  <div class="wrap">
+    <div id="cart-empty" class="cart-empty" style="display:none;">
+      <p>Your cart is empty.</p>
+      <a href="products.html" class="btn btn-terracotta">Shop products →</a>
+    </div>
+
+    <div id="cart-loaded" style="display:none;">
+      <div class="cart-layout">
+        <div>
+          <div id="cart-items"></div>
+        </div>
+        <div class="cart-summary">
+          <div class="cart-summary-row cart-summary-total">
+            <span>Subtotal</span>
+            <span id="cart-subtotal">$0.00</span>
+          </div>
+          <p class="form-note" style="margin-top:8px;">Shipping and tax calculated at checkout.</p>
+          <button class="btn btn-terracotta" id="checkout-btn" type="button">Checkout →</button>
+          <p class="form-note" id="checkout-error" style="color:#a33; display:none;"></p>
+          <p class="form-note">Only standard, ready-to-ship items go through this cart. Custom and off-the-shelf custom-fit orders are handled separately through their own request forms.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer" id="contact">
+  <div class="wrap">
+    <nav class="footer-nav">
+      <a href="products.html">Products</a>
+      <a href="open-source.html">Open Source</a>
+      <a href="about.html">About</a>
+      <a href="returns.html">Returns</a>
+    </nav>
+    <div class="contact-list">
+      <div class="contact-group">
+        <a class="contact-email" href="tel:+17812264198">781-226-4198</a>
+        <span class="role">Call or text</span>
+      </div>
+      <div class="contact-group">
+        <a class="contact-email" href="mailto:info@ddp3d.com">info@ddp3d.com</a>
+        <span class="role">General inquiries</span>
+      </div>
+      <div class="contact-group">
+        <a class="contact-email" href="mailto:sales@ddp3d.com">sales@ddp3d.com</a>
+        <span class="role">Orders &amp; product questions</span>
+      </div>
+      <div class="contact-group">
+        <a class="contact-email" href="mailto:support@ddp3d.com">support@ddp3d.com</a>
+        <span class="role">Help with an existing order</span>
+      </div>
+    </div>
+    <p style="margin-top:24px;">&copy; <span id="year"></span> ddp3d. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="assets/cart.js"></script>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  document.querySelectorAll('.nav-item').forEach(function (item) {
+    var dropdown = item.querySelector('.nav-dropdown');
+    if (!dropdown) return;
+    var caret = item.querySelector('.nav-caret');
+    var closeTimer;
+    item.addEventListener('mouseenter', function () {
+      clearTimeout(closeTimer);
+      item.classList.add('open');
+    });
+    item.addEventListener('mouseleave', function () {
+      closeTimer = setTimeout(function () { item.classList.remove('open'); }, 200);
+    });
+    if (caret) {
+      caret.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        item.classList.toggle('open');
+      });
+    }
+  });
+  document.addEventListener('click', function (e) {
+    document.querySelectorAll('.nav-item.open').forEach(function (item) {
+      if (!item.contains(e.target)) item.classList.remove('open');
+    });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.nav-item.open').forEach(function (item) { item.classList.remove('open'); });
+    }
+  });
+</script>
+<script>
+  (function () {
+    var API_BASE = '/api/cart';
+    var emptyEl = document.getElementById('cart-empty');
+    var loadedEl = document.getElementById('cart-loaded');
+    var itemsEl = document.getElementById('cart-items');
+    var subtotalEl = document.getElementById('cart-subtotal');
+    var checkoutBtn = document.getElementById('checkout-btn');
+    var checkoutError = document.getElementById('checkout-error');
+
+    function money(cents) {
+      return '$' + (cents / 100).toFixed(2);
+    }
+
+    function variantLabel(item) {
+      var parts = [];
+      if (item.mountStyle === 'hanging') {
+        parts.push('Hanging (' + (item.railThickness || 'rail size not set') + ')');
+      } else {
+        parts.push('Tabletop');
+      }
+      if (item.heightStyle) {
+        parts.push(item.heightStyle === 'varying' ? 'Varying height' : 'Uniform height');
+      }
+      return parts.join(' · ');
+    }
+
+    function render(items) {
+      if (!items || items.length === 0) {
+        emptyEl.style.display = '';
+        loadedEl.style.display = 'none';
+        return;
+      }
+      emptyEl.style.display = 'none';
+      loadedEl.style.display = '';
+
+      itemsEl.innerHTML = '';
+      var subtotal = 0;
+      items.forEach(function (item) {
+        subtotal += item.unitAmount * item.quantity;
+
+        var row = document.createElement('div');
+        row.className = 'cart-item';
+
+        var thumb = document.createElement('div');
+        thumb.className = 'cart-item-thumb';
+
+        var nameWrap = document.createElement('div');
+        var name = document.createElement('div');
+        name.className = 'cart-item-name';
+        name.textContent = item.name;
+        var variant = document.createElement('div');
+        variant.className = 'cart-item-variant';
+        variant.textContent = variantLabel(item);
+        nameWrap.appendChild(name);
+        nameWrap.appendChild(variant);
+
+        var stepper = document.createElement('div');
+        stepper.className = 'qty-stepper';
+        var minusBtn = document.createElement('button');
+        minusBtn.type = 'button';
+        minusBtn.textContent = '−';
+        minusBtn.addEventListener('click', function () { updateQuantity(item.id, item.quantity - 1); });
+        var qtySpan = document.createElement('span');
+        qtySpan.textContent = String(item.quantity);
+        var plusBtn = document.createElement('button');
+        plusBtn.type = 'button';
+        plusBtn.textContent = '+';
+        plusBtn.addEventListener('click', function () { updateQuantity(item.id, item.quantity + 1); });
+        stepper.appendChild(minusBtn);
+        stepper.appendChild(qtySpan);
+        stepper.appendChild(plusBtn);
+
+        var priceWrap = document.createElement('div');
+        priceWrap.style.textAlign = 'right';
+        var price = document.createElement('div');
+        price.className = 'cart-item-price';
+        price.textContent = money(item.unitAmount * item.quantity);
+        var removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.className = 'cart-item-remove';
+        removeBtn.textContent = 'Remove';
+        removeBtn.style.display = 'block';
+        removeBtn.style.marginTop = '4px';
+        removeBtn.style.marginLeft = 'auto';
+        removeBtn.addEventListener('click', function () { removeItem(item.id); });
+        priceWrap.appendChild(price);
+        priceWrap.appendChild(removeBtn);
+
+        row.appendChild(thumb);
+        row.appendChild(nameWrap);
+        row.appendChild(stepper);
+        row.appendChild(priceWrap);
+        itemsEl.appendChild(row);
+      });
+
+      subtotalEl.textContent = money(subtotal);
+    }
+
+    function loadCart() {
+      fetch(API_BASE, { credentials: 'same-origin' })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          render(data.items);
+          if (window.ddp3dCart) window.ddp3dCart.refreshBadge();
+        });
+    }
+
+    function updateQuantity(id, quantity) {
+      if (quantity < 1) { removeItem(id); return; }
+      fetch(API_BASE + '/items/' + id, {
+        method: 'PATCH',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ quantity: quantity }),
+      })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          render(data.items);
+          if (window.ddp3dCart) window.ddp3dCart.refreshBadge();
+        });
+    }
+
+    function removeItem(id) {
+      fetch(API_BASE + '/items/' + id, { method: 'DELETE', credentials: 'same-origin' })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          render(data.items);
+          if (window.ddp3dCart) window.ddp3dCart.refreshBadge();
+        });
+    }
+
+    checkoutBtn.addEventListener('click', function () {
+      checkoutError.style.display = 'none';
+      checkoutBtn.disabled = true;
+      checkoutBtn.textContent = 'Redirecting to secure checkout…';
+      fetch(API_BASE + '/checkout', { method: 'POST', credentials: 'same-origin' })
+        .then(function (res) {
+          if (!res.ok) return res.json().then(function (err) { throw new Error(err.error || 'Checkout failed'); });
+          return res.json();
+        })
+        .then(function (data) {
+          window.location.href = data.url;
+        })
+        .catch(function (err) {
+          checkoutBtn.disabled = false;
+          checkoutBtn.textContent = 'Checkout →';
+          checkoutError.textContent = err.message || 'Something went wrong — please try again.';
+          checkoutError.style.display = 'block';
+        });
+    });
+
+    loadCart();
+  })();
+</script>
+
+</body>
+</html>
