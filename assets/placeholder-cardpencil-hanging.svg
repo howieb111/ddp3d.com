@@ -1,0 +1,20 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="400" fill="#E8E4DD"/>
+  <rect x="70" y="46" width="260" height="24" rx="4" fill="#8C8880"/>
+  <rect x="165" y="38" width="70" height="46" rx="8" fill="#C2542E"/>
+  <!-- card column -->
+  <rect x="105" y="84" width="105" height="210" rx="16" fill="#C2542E"/>
+  <rect x="120" y="104" width="75" height="26" rx="4" fill="#0B3350"/>
+  <g transform="rotate(-8 157 90)">
+    <rect x="122" y="58" width="70" height="55" rx="4" fill="#E7F1FA" stroke="#0B3350" stroke-width="3"/>
+  </g>
+  <!-- pencil column, same height as card column -->
+  <rect x="212" y="84" width="83" height="210" rx="16" fill="#C2542E"/>
+  <g transform="rotate(14 253 60)">
+    <rect x="245" y="10" width="16" height="95" rx="4" fill="#F2A93B"/>
+    <rect x="245" y="10" width="16" height="16" rx="3" fill="#E88AA0"/>
+    <polygon points="245,105 261,105 253,120" fill="#6B4A36"/>
+  </g>
+  <text x="200" y="370" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0B3350" font-weight="600">PLACEHOLDER</text>
+  <text x="200" y="392" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#8C8880">Card and Pencil Holder — Hanging</text>
+</svg>
