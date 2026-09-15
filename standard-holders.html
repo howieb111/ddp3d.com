@@ -48,6 +48,11 @@
   @media (max-width: 780px) {
     .sh-layout { grid-template-columns: 1fr; }
   }
+  .sh-gallery-label { font-size: 0.85rem; color: var(--navy); opacity: 0.75; margin: 0 0 12px; }
+  .sh-gallery { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 8px; -webkit-overflow-scrolling: touch; }
+  .sh-gallery figure { margin: 0; flex: 0 0 150px; }
+  .sh-gallery img { width: 150px; height: 150px; object-fit: cover; border-radius: 10px; background: var(--photo-gray); display: block; }
+  .sh-gallery figcaption { margin-top: 6px; font-size: 0.78rem; color: var(--navy); opacity: 0.8; text-align: center; }
 </style>
 </head>
 <body>
@@ -159,7 +164,7 @@
 <section class="sh-product section-alt">
   <div class="wrap sh-layout">
     <div class="sh-image">
-      <img id="img-pencilcard" src="assets/placeholder-cardpencil-hanging.svg" alt="Standard Pencil & Card Holder">
+      <img id="img-pencilcard" src="assets/standard-pencilcard-hanging.png" alt="Standard Pencil & Card Holder">
     </div>
     <div>
       <div class="card-tag tag-live">Ready to ship</div>
@@ -196,6 +201,19 @@
         </div>
         <p class="sh-status" data-status></p>
       </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <p class="sh-gallery-label">Examples — pen &amp; pencil slot count, cutout, and logo customization aren't selectable here yet, but these show what's possible:</p>
+    <div class="sh-gallery">
+      <figure><img src="assets/standard-pencilcard-ex-card-only.jpg" alt="Pencil & card holder, card slot only, no pen or pencil slots" loading="lazy"><figcaption>Card only</figcaption></figure>
+      <figure><img src="assets/standard-pencilcard-ex-1-golf-pencil.jpg" alt="Pencil & card holder with one golf pencil slot" loading="lazy"><figcaption>1 golf pencil</figcaption></figure>
+      <figure><img src="assets/standard-pencilcard-ex-4-golf-pencils.jpg" alt="Pencil & card holder with four golf pencil slots" loading="lazy"><figcaption>4 golf pencils</figcaption></figure>
+      <figure><img src="assets/standard-pencilcard-ex-2-full-height.jpg" alt="Pencil & card holder with two full-height pen or pencil slots" loading="lazy"><figcaption>2 full-height pens/pencils</figcaption></figure>
+      <figure><img src="assets/standard-pencilcard-ex-1-full-1-golf.jpg" alt="Pencil & card holder with one full-height pen or pencil slot and one golf pencil slot" loading="lazy"><figcaption>1 full-height + 1 golf pencil</figcaption></figure>
+      <figure><img src="assets/standard-pencilcard-ex-cutout.png" alt="Pencil & card holder with a front cutout to see more of the card" loading="lazy"><figcaption>With card cutout</figcaption></figure>
+      <figure><img src="assets/standard-pencilcard-ex-logo-tabletop.png" alt="Tabletop pencil & card holder with a custom logo, shown with a sample Unitarian Universalist chalice logo" loading="lazy"><figcaption>Custom logo — tabletop</figcaption></figure>
+      <figure><img src="assets/standard-pencilcard-ex-logo-hanging.png" alt="Hanging pencil & card holder with a custom logo, shown with a sample Unitarian Universalist chalice logo" loading="lazy"><figcaption>Custom logo — hanging</figcaption></figure>
     </div>
   </div>
 </section>
@@ -318,10 +336,10 @@
       card: { hanging: 'assets/placeholder-card-hanging.svg', tabletop: 'assets/placeholder-card-tabletop.svg' },
       brochure: { hanging: 'assets/placeholder-brochure-hanging.svg', tabletop: 'assets/placeholder-brochure-tabletop.svg' },
       pencilcard: {
-        hanging_uniform: 'assets/placeholder-cardpencil-hanging.svg',
-        hanging_varying: 'assets/placeholder-cardpencil-hanging-variable.svg',
-        tabletop_uniform: 'assets/placeholder-cardpencil-tabletop.svg',
-        tabletop_varying: 'assets/placeholder-cardpencil-tabletop.svg'
+        hanging_uniform: 'assets/standard-pencilcard-hanging.png',
+        hanging_varying: 'assets/standard-pencilcard-hanging.png',
+        tabletop_uniform: 'assets/standard-pencilcard-tabletop.png',
+        tabletop_varying: 'assets/standard-pencilcard-tabletop.png'
       }
     };
 
