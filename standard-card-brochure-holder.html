@@ -326,13 +326,25 @@
           colorSelect.appendChild(opt);
         });
       }
-      function updateColorPreview() {
-        if (!materialSelect || !colorSelect) return;
-        var hex = (MATERIALS[materialSelect.value] && MATERIALS[materialSelect.value].colors[colorSelect.value]) || '#cccccc';
-        if (swatchEl) swatchEl.style.backgroundColor = hex;
-        if (overlayEl) overlayEl.style.backgroundColor = hex;
+      // mix-blend-mode: color only transfers hue/saturation, not lightness —
+      // so it does nothing visible for near-neutral targets. For Black, Dark
+      // Gray, and Light Gray we have real pre-colorized photos and swap the
+      // img src to those directly. Any other near-neutral (e.g. PETG Gray)
+      // falls back to a grayscale + brightness filter on the base photo.
+      var NEUTRAL_IMAGE_KEYS = { 'Black': 'black', 'Dark Gray': 'darkgray', 'Light Gray': 'lightgray', 'Jade White': 'white', 'White': 'white' };
+      function hexToHsl(hex) {
+        var r = parseInt(hex.slice(1, 3), 16) / 255;
+        var g = parseInt(hex.slice(3, 5), 16) / 255;
+        var b = parseInt(hex.slice(5, 7), 16) / 255;
+        var max = Math.max(r, g, b), min = Math.min(r, g, b);
+        var l = (max + min) / 2;
+        var s = 0;
+        if (max !== min) {
+          var d = max - min;
+          s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        }
+        return { s: s, l: l };
       }
-
       function currentMount() {
         var checked = group.querySelector('input[name="' + productSlug + '-mount"]:checked');
         return checked ? checked.value : 'hanging';
@@ -341,10 +353,36 @@
         var checked = group.querySelector('input[name="' + productSlug + '-size"]:checked');
         return checked ? checked.value : '3x5';
       }
+      function currentNeutralImageKey() {
+        return colorSelect ? (NEUTRAL_IMAGE_KEYS[colorSelect.value] || null) : null;
+      }
+
+      function updateColorPreview() {
+        if (!materialSelect || !colorSelect) return;
+        var hex = (MATERIALS[materialSelect.value] && MATERIALS[materialSelect.value].colors[colorSelect.value]) || '#cccccc';
+        if (swatchEl) swatchEl.style.backgroundColor = hex;
+        if (currentNeutralImageKey()) {
+          // Real pre-colorized photo is loaded as the img src — no CSS tint needed.
+          if (overlayEl) overlayEl.style.opacity = '0';
+          if (img) img.style.filter = '';
+          return;
+        }
+        var hsl = hexToHsl(hex);
+        var isNeutral = hsl.s < 0.1;
+        if (overlayEl) {
+          overlayEl.style.backgroundColor = hex;
+          overlayEl.style.opacity = isNeutral ? '0' : '';
+        }
+        if (img) {
+          img.style.filter = isNeutral ? ('grayscale(1) brightness(' + (0.35 + hsl.l * 1.5).toFixed(2) + ')') : '';
+        }
+      }
 
       function updateImage() {
         if (!img) return;
-        img.src = IMAGES[currentSize()][currentMount()];
+        var basePath = IMAGES[currentSize()][currentMount()];
+        var neutralKey = currentNeutralImageKey();
+        img.src = neutralKey ? basePath.replace(/\.png$/, '-' + neutralKey + '.png') : basePath;
       }
       function updatePrice() {
         if (!priceEl) return;
@@ -353,20 +391,20 @@
       function updateAll() {
         updateImage();
         updatePrice();
+        updateColorPreview();
       }
 
       mountRadios.forEach(function (r) { r.addEventListener('change', updateAll); });
       sizeRadios.forEach(function (r) { r.addEventListener('change', updateAll); });
       if (materialSelect) {
-        materialSelect.addEventListener('change', function () { populateColors(); updateColorPreview(); });
+        materialSelect.addEventListener('change', function () { populateColors(); updateAll(); });
       }
       if (colorSelect) {
-        colorSelect.addEventListener('change', updateColorPreview);
+        colorSelect.addEventListener('change', updateAll);
       }
 
-      updateAll();
       populateColors();
-      updateColorPreview();
+      updateAll();
 
       addBtn.addEventListener('click', function () {
         var payload = {
