@@ -46,6 +46,11 @@
   @media (max-width: 780px) {
     .sh-layout { grid-template-columns: 1fr; }
   }
+  .sh-slot-row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .sh-slot-row label { display: flex; flex-direction: column; gap: 6px; font-size: 0.85rem; font-weight: 500; color: var(--navy); }
+  .sh-slot-row input[type="number"] { width: 64px; padding: 8px; border: 1.5px solid rgba(140, 136, 128, 0.4); border-radius: 8px; font-size: 0.95rem; }
+  .sh-slot-note { margin: 8px 0 0; font-size: 0.82rem; color: var(--navy); opacity: 0.75; }
+  .sh-slot-note.over { color: #a33; opacity: 1; font-weight: 600; }
   .sh-gallery-label { font-size: 0.85rem; color: var(--navy); opacity: 0.75; margin: 0 0 12px; }
   .sh-gallery { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 8px; -webkit-overflow-scrolling: touch; }
   .sh-gallery figure { margin: 0; flex: 0 0 150px; }
@@ -192,6 +197,29 @@
             <label><input type="radio" name="pencilcard-height" value="uniform" checked> Uniform height</label>
             <label><input type="radio" name="pencilcard-height" value="varying"> Varying height</label>
           </div>
+        </div>
+        <div class="sh-option-group">
+          <label class="group-label">Card size</label>
+          <div class="sh-radio-row">
+            <label><input type="radio" name="pencilcard-cardsize" value="3x5" checked> 3x5" index card</label>
+            <label><input type="radio" name="pencilcard-cardsize" value="4x6"> 4x6" index card</label>
+          </div>
+        </div>
+        <div class="sh-option-group">
+          <label class="group-label">Card cutout</label>
+          <div class="sh-radio-row">
+            <label><input type="radio" name="pencilcard-cutout" value="no" checked> No cutout</label>
+            <label><input type="radio" name="pencilcard-cutout" value="yes"> With cutout — see more of the card</label>
+          </div>
+        </div>
+        <div class="sh-option-group">
+          <label class="group-label">Pen / pencil / golf pencil slots (4 max, combined)</label>
+          <div class="sh-slot-row">
+            <label>Pens<input type="number" min="0" max="4" value="0" data-pen-count></label>
+            <label>Pencils<input type="number" min="0" max="4" value="0" data-pencil-count></label>
+            <label>Golf pencils<input type="number" min="0" max="4" value="0" data-golf-count></label>
+          </div>
+          <p class="sh-slot-note" data-slot-note>0 of 4 slots used</p>
         </div>
         <div class="sh-qty-row">
           <label class="group-label" style="margin:0;">Qty</label>
@@ -349,9 +377,16 @@
       var mountRadios = group.querySelectorAll('input[name="' + productSlug + '-mount"]');
       var railRadios = group.querySelectorAll('input[name="' + productSlug + '-rail"]');
       var heightRadios = group.querySelectorAll('input[name="' + productSlug + '-height"]');
+      var cardSizeRadios = group.querySelectorAll('input[name="' + productSlug + '-cardsize"]');
+      var cutoutRadios = group.querySelectorAll('input[name="' + productSlug + '-cutout"]');
+      var penInput = group.querySelector('[data-pen-count]');
+      var pencilInput = group.querySelector('[data-pencil-count]');
+      var golfInput = group.querySelector('[data-golf-count]');
+      var slotNoteEl = group.querySelector('[data-slot-note]');
       var qtyInput = group.querySelector('[data-qty]');
       var addBtn = group.querySelector('[data-add-to-cart]');
       var statusEl = group.querySelector('[data-status]');
+      var MAX_SLOTS = 4;
 
       function currentMount() {
         var checked = group.querySelector('input[name="' + productSlug + '-mount"]:checked');
@@ -365,6 +400,33 @@
         if (!heightRadios.length) return null;
         var checked = group.querySelector('input[name="' + productSlug + '-height"]:checked');
         return checked ? checked.value : 'uniform';
+      }
+      function currentCardSize() {
+        if (!cardSizeRadios.length) return null;
+        var checked = group.querySelector('input[name="' + productSlug + '-cardsize"]:checked');
+        return checked ? checked.value : '3x5';
+      }
+      function currentCutout() {
+        if (!cutoutRadios.length) return null;
+        var checked = group.querySelector('input[name="' + productSlug + '-cutout"]:checked');
+        return checked ? checked.value : 'no';
+      }
+      function slotCount(input) {
+        return Math.max(0, parseInt(input && input.value, 10) || 0);
+      }
+      function totalSlots() {
+        if (!penInput) return 0;
+        return slotCount(penInput) + slotCount(pencilInput) + slotCount(golfInput);
+      }
+      function updateSlotNote() {
+        if (!slotNoteEl) return;
+        var total = totalSlots();
+        var over = total > MAX_SLOTS;
+        slotNoteEl.textContent = over
+          ? total + ' of ' + MAX_SLOTS + ' slots used — reduce by ' + (total - MAX_SLOTS) + ' to continue'
+          : total + ' of ' + MAX_SLOTS + ' slots used';
+        slotNoteEl.className = 'sh-slot-note' + (over ? ' over' : '');
+        if (addBtn) addBtn.disabled = over;
       }
 
       function updateImage() {
@@ -386,11 +448,16 @@
       mountRadios.forEach(function (r) { r.addEventListener('change', function () { updateRailVisibility(); updateImage(); }); });
       railRadios.forEach(function (r) { r.addEventListener('change', updateImage); });
       heightRadios.forEach(function (r) { r.addEventListener('change', updateImage); });
+      [penInput, pencilInput, golfInput].forEach(function (input) {
+        if (input) input.addEventListener('input', updateSlotNote);
+      });
 
       updateRailVisibility();
       updateImage();
+      updateSlotNote();
 
       addBtn.addEventListener('click', function () {
+        if (totalSlots() > MAX_SLOTS) return;
         var payload = {
           productKey: addBtn.getAttribute('data-product-key'),
           mountStyle: currentMount(),
@@ -399,6 +466,14 @@
         if (payload.mountStyle === 'hanging') payload.railThickness = currentRail();
         var height = currentHeight();
         if (height) payload.heightStyle = height;
+        var cardSize = currentCardSize();
+        if (cardSize) {
+          payload.cardSize = cardSize;
+          payload.cutout = currentCutout();
+          payload.penCount = slotCount(penInput);
+          payload.pencilCount = slotCount(pencilInput);
+          payload.golfPencilCount = slotCount(golfInput);
+        }
 
         addBtn.disabled = true;
         statusEl.className = 'sh-status';

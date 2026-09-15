@@ -29,6 +29,7 @@
         <div class="nav-dropdown"><div class="nav-dropdown-inner">
           <a href="stripping-basket.html">Fly-Fishing Stripping Basket</a>
           <a href="hymnal-pencil-card.html">Hymnal Rack Mounted Pencil and Card Holders</a>
+          <a href="standard-holders.html">Standard Card, Brochure &amp; Pencil Holders</a>
           <a href="custom-projects.html">Custom Design, Development &amp; Printing</a>
           <div class="nav-cat-label">Coming Soon</div>
           <span class="disabled">Bicycle Flag Mount</span>
@@ -76,8 +77,31 @@
             <span>Subtotal</span>
             <span id="cart-subtotal">$0.00</span>
           </div>
-          <p class="form-note" style="margin-top:8px;">Shipping and tax calculated at checkout.</p>
-          <button class="btn btn-terracotta" id="checkout-btn" type="button">Checkout →</button>
+
+          <div id="shipping-form" style="margin-top:16px;">
+            <label class="group-label" style="display:block; font-size:0.82rem; font-weight:600; color:var(--navy); margin-bottom:8px;">Shipping address</label>
+            <div class="form-field" style="margin-bottom:10px;">
+              <input type="text" id="ship-street" placeholder="Street address">
+            </div>
+            <div class="form-field" style="margin-bottom:10px;">
+              <input type="text" id="ship-city" placeholder="City">
+            </div>
+            <div style="display:flex; gap:8px; margin-bottom:10px;">
+              <input type="text" id="ship-state" placeholder="State" maxlength="2" style="width:70px; padding:11px; border:1.5px solid rgba(140,136,128,0.4); border-radius:8px; text-transform:uppercase;">
+              <input type="text" id="ship-zip" placeholder="ZIP" style="flex:1; padding:11px; border:1.5px solid rgba(140,136,128,0.4); border-radius:8px;">
+            </div>
+            <button class="btn btn-ghost" id="get-rates-btn" type="button" style="width:100%; text-align:center;">Get shipping rates →</button>
+            <p class="form-note" id="rates-error" style="color:#a33; display:none;"></p>
+          </div>
+
+          <div id="rates-list" style="margin-top:16px; display:none;"></div>
+
+          <div class="cart-summary-row cart-summary-total" id="shipping-row" style="display:none;">
+            <span>Shipping</span>
+            <span id="cart-shipping">$0.00</span>
+          </div>
+
+          <button class="btn btn-terracotta" id="checkout-btn" type="button" disabled>Select shipping to continue</button>
           <p class="form-note" id="checkout-error" style="color:#a33; display:none;"></p>
           <p class="form-note">Only standard, ready-to-ship items go through this cart. Custom and off-the-shelf custom-fit orders are handled separately through their own request forms.</p>
         </div>
@@ -160,10 +184,27 @@
     var subtotalEl = document.getElementById('cart-subtotal');
     var checkoutBtn = document.getElementById('checkout-btn');
     var checkoutError = document.getElementById('checkout-error');
+    var getRatesBtn = document.getElementById('get-rates-btn');
+    var ratesError = document.getElementById('rates-error');
+    var ratesListEl = document.getElementById('rates-list');
+    var shippingRow = document.getElementById('shipping-row');
+    var shippingAmountEl = document.getElementById('cart-shipping');
+    var selectedShippingAmount = null;
+
+    function resetShippingUI() {
+      ratesListEl.innerHTML = '';
+      ratesListEl.style.display = 'none';
+      shippingRow.style.display = 'none';
+      selectedShippingAmount = null;
+      checkoutBtn.disabled = true;
+      checkoutBtn.textContent = 'Select shipping to continue';
+    }
 
     function money(cents) {
       return '$' + (cents / 100).toFixed(2);
     }
+
+    var CARD_SIZES = { '3x5': '3x5" index card', '4x6': '4x6" index card' };
 
     function variantLabel(item) {
       var parts = [];
@@ -174,6 +215,21 @@
       }
       if (item.heightStyle) {
         parts.push(item.heightStyle === 'varying' ? 'Varying height' : 'Uniform height');
+      }
+      if (item.cardSize) {
+        parts.push(CARD_SIZES[item.cardSize] || item.cardSize);
+      }
+      if (item.cutout === 'yes') {
+        parts.push('Card cutout');
+      }
+      var slotBits = [];
+      if (item.penCount) slotBits.push(item.penCount + ' pen');
+      if (item.pencilCount) slotBits.push(item.pencilCount + ' pencil');
+      if (item.golfPencilCount) slotBits.push(item.golfPencilCount + ' golf pencil');
+      if (slotBits.length) {
+        parts.push(slotBits.join(', '));
+      } else if (item.productKey === 'standard-pencil-card-holder') {
+        parts.push('Card only, no pen/pencil slots');
       }
       return parts.join(' · ');
     }
@@ -255,6 +311,7 @@
         .then(function (res) { return res.json(); })
         .then(function (data) {
           render(data.items);
+          resetShippingUI();
           if (window.ddp3dCart) window.ddp3dCart.refreshBadge();
         });
     }
@@ -270,6 +327,7 @@
         .then(function (res) { return res.json(); })
         .then(function (data) {
           render(data.items);
+          resetShippingUI();
           if (window.ddp3dCart) window.ddp3dCart.refreshBadge();
         });
     }
@@ -279,11 +337,106 @@
         .then(function (res) { return res.json(); })
         .then(function (data) {
           render(data.items);
+          resetShippingUI();
           if (window.ddp3dCart) window.ddp3dCart.refreshBadge();
         });
     }
 
+    function renderRates(rates) {
+      ratesListEl.innerHTML = '';
+      rates.forEach(function (rate, i) {
+        var row = document.createElement('label');
+        row.style.cssText = 'display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 12px; border:1.5px solid rgba(140,136,128,0.4); border-radius:8px; margin-bottom:8px; cursor:pointer; font-size:0.88rem;';
+        var left = document.createElement('span');
+        left.style.cssText = 'display:flex; align-items:center; gap:8px;';
+        var radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = 'shipping-rate';
+        radio.value = rate.id;
+        if (i === 0) radio.checked = true;
+        var label = document.createElement('span');
+        label.textContent = rate.provider + ' ' + rate.service + (rate.days ? ' (' + rate.days + 'd)' : '');
+        left.appendChild(radio);
+        left.appendChild(label);
+        var price = document.createElement('span');
+        price.style.fontWeight = '600';
+        price.textContent = '$' + parseFloat(rate.amount).toFixed(2);
+        row.appendChild(left);
+        row.appendChild(price);
+        radio.addEventListener('change', function () { selectShipping(rate.id); });
+        ratesListEl.appendChild(row);
+      });
+      ratesListEl.style.display = 'block';
+      if (rates.length) selectShipping(rates[0].id);
+    }
+
+    function selectShipping(rateId) {
+      checkoutBtn.disabled = true;
+      checkoutBtn.textContent = 'Selecting shipping…';
+      fetch(API_BASE + '/select-shipping', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rateId: rateId }),
+      })
+        .then(function (res) {
+          if (!res.ok) return res.json().then(function (err) { throw new Error(err.error || 'Could not select that rate'); });
+          return res.json();
+        })
+        .then(function (data) {
+          selectedShippingAmount = data.shippingAmount;
+          shippingAmountEl.textContent = '$' + (data.shippingAmount / 100).toFixed(2);
+          shippingRow.style.display = 'flex';
+          checkoutBtn.disabled = false;
+          checkoutBtn.textContent = 'Checkout →';
+        })
+        .catch(function (err) {
+          ratesError.textContent = err.message || 'Could not select that shipping rate.';
+          ratesError.style.display = 'block';
+          checkoutBtn.disabled = true;
+          checkoutBtn.textContent = 'Select shipping to continue';
+        });
+    }
+
+    getRatesBtn.addEventListener('click', function () {
+      ratesError.style.display = 'none';
+      resetShippingUI();
+      var street = document.getElementById('ship-street').value.trim();
+      var city = document.getElementById('ship-city').value.trim();
+      var state = document.getElementById('ship-state').value.trim();
+      var zip = document.getElementById('ship-zip').value.trim();
+      if (!street || !city || !state || !zip) {
+        ratesError.textContent = 'Enter street, city, state, and ZIP first.';
+        ratesError.style.display = 'block';
+        return;
+      }
+      getRatesBtn.disabled = true;
+      getRatesBtn.textContent = 'Getting rates…';
+      fetch(API_BASE + '/shipping-quote', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ street: street, city: city, state: state, zip: zip }),
+      })
+        .then(function (res) {
+          if (!res.ok) return res.json().then(function (err) { throw new Error(err.error || 'Could not get shipping rates'); });
+          return res.json();
+        })
+        .then(function (data) {
+          getRatesBtn.disabled = false;
+          getRatesBtn.textContent = 'Get shipping rates →';
+          renderRates(data.rates);
+        })
+        .catch(function (err) {
+          getRatesBtn.disabled = false;
+          getRatesBtn.textContent = 'Get shipping rates →';
+          ratesError.textContent = err.message || 'Something went wrong — please try again.';
+          ratesError.style.display = 'block';
+        });
+    });
+
     checkoutBtn.addEventListener('click', function () {
+      if (checkoutBtn.disabled) return;
       checkoutError.style.display = 'none';
       checkoutBtn.disabled = true;
       checkoutBtn.textContent = 'Redirecting to secure checkout…';
