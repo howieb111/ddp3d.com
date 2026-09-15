@@ -118,7 +118,7 @@
 <section class="statement">
   <div class="wrap">
     <h1>Standard Card / Brochure Holder</h1>
-    <p>Fixed sizes, ready to ship — no design review, no waiting on a quote. Pick a size, pick hanging or tabletop, measure your rail if you're hanging it, and check out instantly. We recommend ordering one first to confirm the fit before ordering the quantity you need.</p>
+    <p>Fixed sizes, ready to ship — no design review, no waiting on a quote. Pick a size, pick hanging or tabletop, and check out instantly. We recommend ordering one first to confirm the fit before ordering the quantity you need.</p>
   </div>
 </section>
 
@@ -132,7 +132,7 @@
     <div>
       <div class="card-tag tag-live">Ready to ship</div>
       <h2>Standard Card / Brochure Holder</h2>
-      <p>Three sizes — from a small index card up to a folded brochure. Hangs on a rail or ledge, or sits freestanding on a tabletop.</p>
+      <p>Three sizes — from a small index card up to a folded brochure. Hangs from a screw or nail with a standard keyhole mount, or sits freestanding on a tabletop.</p>
       <p class="sh-price" data-price>$7.00</p>
 
       <div class="sh-options" data-product="cardbrochure">
@@ -149,13 +149,6 @@
           <div class="sh-radio-row">
             <label><input type="radio" name="cardbrochure-mount" value="hanging" checked> Hanging</label>
             <label><input type="radio" name="cardbrochure-mount" value="tabletop"> Tabletop</label>
-          </div>
-        </div>
-        <div class="sh-option-group" data-rail-group>
-          <label class="group-label">Rail / ledge thickness</label>
-          <div class="sh-radio-row">
-            <label><input type="radio" name="cardbrochure-rail" value="1/2&quot;" checked> 1/2"</label>
-            <label><input type="radio" name="cardbrochure-rail" value="3/4&quot;"> 3/4"</label>
           </div>
         </div>
         <div class="sh-option-group">
@@ -195,7 +188,7 @@
   <div class="wrap wrap-narrow">
     <div class="section-head">
       <h2>Need something custom instead?</h2>
-      <p>These are fixed sizes with no design review — the logo option isn't offered here. If you want your logo on it, a non-standard size, or want us to check the fit before you order, see the <a href="hymnal-pencil-card.html">custom &amp; logo-customized holders</a> instead.</p>
+      <p>These are fixed sizes with no design review — the logo option isn't offered here. If you want your logo on it, a non-standard size, mounting on a rail or ledge instead of a keyhole, or want us to check the fit before you order, see the <a href="hymnal-pencil-card.html">custom &amp; logo-customized holders</a> instead.</p>
     </div>
   </div>
 </section>
@@ -312,9 +305,7 @@
       var productSlug = group.getAttribute('data-product');
       var img = document.getElementById('img-' + productSlug);
       var priceEl = group.parentElement.querySelector('[data-price]');
-      var railGroup = group.querySelector('[data-rail-group]');
       var mountRadios = group.querySelectorAll('input[name="' + productSlug + '-mount"]');
-      var railRadios = group.querySelectorAll('input[name="' + productSlug + '-rail"]');
       var sizeRadios = group.querySelectorAll('input[name="' + productSlug + '-size"]');
       var materialSelect = group.querySelector('[data-material]');
       var colorSelect = group.querySelector('[data-color]');
@@ -346,10 +337,6 @@
         var checked = group.querySelector('input[name="' + productSlug + '-mount"]:checked');
         return checked ? checked.value : 'hanging';
       }
-      function currentRail() {
-        var checked = group.querySelector('input[name="' + productSlug + '-rail"]:checked');
-        return checked ? checked.value : '1/2"';
-      }
       function currentSize() {
         var checked = group.querySelector('input[name="' + productSlug + '-size"]:checked');
         return checked ? checked.value : '3x5';
@@ -363,19 +350,13 @@
         if (!priceEl) return;
         priceEl.textContent = '$' + PRICES[currentSize()][currentMount()] + '.00';
       }
-      function updateRailVisibility() {
-        if (!railGroup) return;
-        railGroup.style.display = currentMount() === 'hanging' ? '' : 'none';
-      }
       function updateAll() {
-        updateRailVisibility();
         updateImage();
         updatePrice();
       }
 
       mountRadios.forEach(function (r) { r.addEventListener('change', updateAll); });
       sizeRadios.forEach(function (r) { r.addEventListener('change', updateAll); });
-      railRadios.forEach(function (r) { r.addEventListener('change', updateImage); });
       if (materialSelect) {
         materialSelect.addEventListener('change', function () { populateColors(); updateColorPreview(); });
       }
@@ -394,7 +375,6 @@
           cardSize: currentSize(),
           quantity: Math.max(1, parseInt(qtyInput.value, 10) || 1)
         };
-        if (payload.mountStyle === 'hanging') payload.railThickness = currentRail();
         if (materialSelect) payload.material = materialSelect.value;
         if (colorSelect) payload.color = colorSelect.value;
 

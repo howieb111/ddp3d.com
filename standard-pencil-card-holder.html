@@ -117,7 +117,7 @@
 <section class="statement">
   <div class="wrap">
     <h1>Standard Pencil &amp; Card Holder</h1>
-    <p>Fixed size, ready to ship — no design review, no waiting on a quote. Pick hanging or tabletop, measure your rail if you're hanging it, and check out instantly. We recommend ordering one first to confirm the fit before ordering the quantity you need.</p>
+    <p>Fixed size, ready to ship — no design review, no waiting on a quote. Pick hanging or tabletop and check out instantly. We recommend ordering one first to confirm the fit before ordering the quantity you need.</p>
   </div>
 </section>
 
@@ -131,7 +131,7 @@
     <div>
       <div class="card-tag tag-live">Ready to ship</div>
       <h2>Standard Pencil &amp; Card Holder</h2>
-      <p>Index-card size plus your choice of pen, pencil, and golf-pencil slots. Hangs on a rail or ledge, or sits freestanding on a tabletop.</p>
+      <p>Index-card size plus your choice of pen, pencil, and golf-pencil slots. Hangs from a screw or nail with a standard keyhole mount, or sits freestanding on a tabletop.</p>
       <p class="sh-price">$9.00</p>
 
       <div class="sh-options" data-product="pencilcard">
@@ -140,13 +140,6 @@
           <div class="sh-radio-row">
             <label><input type="radio" name="pencilcard-mount" value="hanging" checked> Hanging</label>
             <label><input type="radio" name="pencilcard-mount" value="tabletop"> Tabletop</label>
-          </div>
-        </div>
-        <div class="sh-option-group" data-rail-group>
-          <label class="group-label">Rail / ledge thickness</label>
-          <div class="sh-radio-row">
-            <label><input type="radio" name="pencilcard-rail" value="1/2&quot;" checked> 1/2"</label>
-            <label><input type="radio" name="pencilcard-rail" value="3/4&quot;"> 3/4"</label>
           </div>
         </div>
         <div class="sh-option-group">
@@ -222,7 +215,7 @@
   <div class="wrap wrap-narrow">
     <div class="section-head">
       <h2>Need something custom instead?</h2>
-      <p>These are fixed sizes with no design review — the logo option isn't offered here. If you want your logo on it, a non-standard size, or want us to check the fit before you order, see the <a href="hymnal-pencil-card.html">custom &amp; logo-customized holders</a> instead.</p>
+      <p>These are fixed sizes with no design review — the logo option isn't offered here. If you want your logo on it, a non-standard size, mounting on a rail or ledge instead of a keyhole, or want us to check the fit before you order, see the <a href="hymnal-pencil-card.html">custom &amp; logo-customized holders</a> instead.</p>
     </div>
   </div>
 </section>
@@ -326,9 +319,7 @@
     document.querySelectorAll('.sh-options').forEach(function (group) {
       var productSlug = group.getAttribute('data-product');
       var img = document.getElementById('img-' + productSlug);
-      var railGroup = group.querySelector('[data-rail-group]');
       var mountRadios = group.querySelectorAll('input[name="' + productSlug + '-mount"]');
-      var railRadios = group.querySelectorAll('input[name="' + productSlug + '-rail"]');
       var cardSizeRadios = group.querySelectorAll('input[name="' + productSlug + '-cardsize"]');
       var cutoutRadios = group.querySelectorAll('input[name="' + productSlug + '-cutout"]');
       var penInput = group.querySelector('[data-pen-count]');
@@ -366,10 +357,6 @@
         var checked = group.querySelector('input[name="' + productSlug + '-mount"]:checked');
         return checked ? checked.value : 'hanging';
       }
-      function currentRail() {
-        var checked = group.querySelector('input[name="' + productSlug + '-rail"]:checked');
-        return checked ? checked.value : '1/2"';
-      }
       function currentCardSize() {
         if (!cardSizeRadios.length) return null;
         var checked = group.querySelector('input[name="' + productSlug + '-cardsize"]:checked');
@@ -404,13 +391,7 @@
         img.src = IMAGES[productSlug][mount];
       }
 
-      function updateRailVisibility() {
-        if (!railGroup) return;
-        railGroup.style.display = currentMount() === 'hanging' ? '' : 'none';
-      }
-
-      mountRadios.forEach(function (r) { r.addEventListener('change', function () { updateRailVisibility(); updateImage(); }); });
-      railRadios.forEach(function (r) { r.addEventListener('change', updateImage); });
+      mountRadios.forEach(function (r) { r.addEventListener('change', updateImage); });
       [penInput, pencilInput, golfInput].forEach(function (input) {
         if (input) input.addEventListener('input', updateSlotNote);
       });
@@ -421,7 +402,6 @@
         colorSelect.addEventListener('change', updateColorPreview);
       }
 
-      updateRailVisibility();
       updateImage();
       updateSlotNote();
       populateColors();
@@ -434,7 +414,6 @@
           mountStyle: currentMount(),
           quantity: Math.max(1, parseInt(qtyInput.value, 10) || 1)
         };
-        if (payload.mountStyle === 'hanging') payload.railThickness = currentRail();
         var cardSize = currentCardSize();
         if (cardSize) {
           payload.cardSize = cardSize;
