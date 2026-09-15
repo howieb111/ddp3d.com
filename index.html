@@ -68,23 +68,12 @@
 </header>
 
 <div class="wrap">
-  <div class="product-hero home-hero">
-    <div>
-      <div class="hero-strip">
-        <button class="gallery-arrow" id="strip-prev" aria-label="Previous">‹</button>
-        <img class="hero-strip-img" id="strip-img-prev" alt="">
-        <div class="gallery-main" id="home-gallery-main" style="transition:opacity 0.35s ease;"><img id="home-main-img" src="" alt=""></div>
-        <img class="hero-strip-img" id="strip-img-next" alt="">
-        <button class="gallery-arrow" id="strip-next" aria-label="Next">›</button>
-      </div>
-    </div>
-    <div>
-      <h1 id="home-title" style="font-size:2.1rem;"></h1>
-      <p id="home-desc"></p>
-      <div class="product-buy">
-        <a class="btn btn-terracotta" id="home-cta" href="products.html">View product →</a>
-      </div>
-    </div>
+  <div class="hero-strip">
+    <button class="gallery-arrow" id="strip-prev" aria-label="Previous">‹</button>
+    <img class="hero-strip-img" id="strip-img-prev" alt="">
+    <div class="gallery-main" id="home-gallery-main" style="transition:opacity 0.35s ease;"><img id="home-main-img" src="" alt=""></div>
+    <img class="hero-strip-img" id="strip-img-next" alt="">
+    <button class="gallery-arrow" id="strip-next" aria-label="Next">›</button>
   </div>
 </div>
 
@@ -191,14 +180,13 @@
   });
 
   (function () {
-    // One unified hero strip: the real product slide is mixed into the same
-    // sequence as the decorative example photos (which don't link anywhere).
+    // One horizontal strip of photos — the real product shot mixed into the
+    // same sequence as decorative example photos (none of them link anywhere).
     // Prev/next thumbnails are faded previews either side of the big current
-    // image; title/desc/CTA only update on product slides, so they stay put
-    // (showing the last real product) while decorative photos cycle through.
-    // Auto-advances; manual prev/next pauses autoplay for 30s before resuming.
-    var PRODUCT = { type: 'product', img: 'assets/pch-2.jpg', title: 'Custom Pencil & Card Holders', desc: 'Your logo, your size, your mounting point — started as a discreet pew hymnal rack mount.', link: 'hymnal-pencil-card.html', cta: 'View product →' };
-    function photo(n) { return { type: 'photo', img: 'assets/hero-scroll-' + n + '.jpg' }; }
+    // image. Auto-advances; manual prev/next pauses autoplay for 30s before
+    // resuming.
+    var PRODUCT = { img: 'assets/pch-2.jpg', alt: 'Custom Pencil & Card Holders' };
+    function photo(n) { return { img: 'assets/hero-scroll-' + n + '.jpg', alt: '' }; }
 
     var SLIDES = [
       PRODUCT, photo(3), photo(9), photo(1), photo(14),
@@ -214,9 +202,6 @@
     var nextImg = document.getElementById('strip-img-next');
     var prevBtn = document.getElementById('strip-prev');
     var nextBtn = document.getElementById('strip-next');
-    var titleEl = document.getElementById('home-title');
-    var descEl = document.getElementById('home-desc');
-    var ctaEl = document.getElementById('home-cta');
     if (!mainImg) return;
 
     function render() {
@@ -225,16 +210,9 @@
       var nextSlide = SLIDES[(idx + 1) % SLIDES.length];
 
       mainImg.src = slide.img;
-      mainImg.alt = slide.type === 'product' ? slide.title : '';
+      mainImg.alt = slide.alt;
       prevImg.src = prevSlide.img;
       nextImg.src = nextSlide.img;
-
-      if (slide.type === 'product') {
-        titleEl.textContent = slide.title;
-        descEl.textContent = slide.desc;
-        ctaEl.href = slide.link;
-        ctaEl.textContent = slide.cta;
-      }
     }
 
     var autoTimer = null;

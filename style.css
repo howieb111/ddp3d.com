@@ -224,7 +224,7 @@ a:hover { text-decoration: underline; }
 .home-hero .gallery-thumb.s2 { background: var(--blue); }
 .home-hero .gallery-thumb.s3 { background: var(--terracotta); }
 
-.hero-strip { display: flex; align-items: center; gap: 14px; }
+.hero-strip { display: flex; align-items: center; gap: 14px; padding: 24px 0 8px; }
 .hero-strip .gallery-main { flex: 1 1 auto; min-width: 0; }
 .hero-strip-img {
   flex: 0 0 auto;
