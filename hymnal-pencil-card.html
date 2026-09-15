@@ -38,7 +38,8 @@
         <div class="nav-dropdown"><div class="nav-dropdown-inner">
           <a href="stripping-basket.html">Fly-Fishing Stripping Basket</a>
           <a href="hymnal-pencil-card.html">Custom Pencil &amp; Card Holders</a>
-          <a href="standard-holders.html">Standard Card, Brochure &amp; Pencil Holders</a>
+          <a href="standard-card-brochure-holder.html">Standard Card / Brochure Holder</a>
+          <a href="standard-pencil-card-holder.html">Standard Pencil &amp; Card Holder</a>
           <a href="custom-projects.html">Custom Design, Development &amp; Printing</a>
           <div class="nav-cat-label">Coming Soon</div>
           <span class="disabled">Bicycle Flag Mount</span>
@@ -86,7 +87,7 @@
         <a class="btn btn-terracotta" href="#contact-form">Get in touch →</a>
         <span>Pricing below.</span>
       </div>
-      <p class="form-note" style="margin-top:14px;">Just need a fixed size, fast? See the instant-checkout <a href="standard-holders.html">Standard Card, Brochure &amp; Pencil Holders</a> — no design review needed.</p>
+      <p class="form-note" style="margin-top:14px;">Just need a fixed size, fast? See the instant-checkout <a href="standard-pencil-card-holder.html">Standard Pencil &amp; Card Holder</a> — or the <a href="standard-card-brochure-holder.html">Card / Brochure Holder</a>. No design review needed.</p>
     </div>
   </div>
 </div>
@@ -128,7 +129,7 @@
   <div class="wrap wrap-narrow">
     <div class="section-head">
       <h2>Bulk pricing</h2>
-      <p style="max-width:420px; margin:0 auto; text-wrap:balance;">Price per unit drops as quantity goes up. The large size adds a flat $3 per unit at any quantity, and a custom logo adds a flat $3 per unit at any quantity.</p>
+      <p style="max-width:420px; margin:0 auto; text-wrap:balance;">Price per unit drops as quantity goes up. The large size adds a flat $3 per unit at any quantity. A custom logo adds a one-time $20 setup fee plus a flat $3 per unit at any quantity.</p>
     </div>
     <div style="text-align:center;">
       <table class="pricing-table" style="display:inline-table; width:420px; max-width:100%; margin:0;">
@@ -137,7 +138,7 @@
         <tr><td>11–50</td><td>$12</td></tr>
         <tr><td>51–100</td><td>$11</td></tr>
         <tr><td>101+</td><td>$10</td></tr>
-        <tr><td>+ Custom logo</td><td>+$3</td></tr>
+        <tr><td>+ Custom logo</td><td>+$3/unit + $20 one-time setup</td></tr>
       </table>
     </div>
   </div>
@@ -186,6 +187,28 @@
         <label for="q-address">Shipping address</label>
         <textarea id="q-address" name="Shipping address" placeholder="Street, city, state, ZIP — used to quote shipping"></textarea>
       </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="q-finish">Finish</label>
+          <select id="q-finish" name="Finish">
+            <option value="Satin">Satin</option>
+            <option value="Gloss">Gloss</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="q-bodycolor">Body color</label>
+          <select id="q-bodycolor" name="Body color"></select>
+        </div>
+      </div>
+      <div class="form-field form-checkbox">
+        <label for="q-logo"><input type="checkbox" id="q-logo" name="Add custom logo" value="Yes"> Add a custom logo (+$3/unit, plus a one-time $20 setup fee)</label>
+      </div>
+      <div class="form-row" id="q-logo-color-row" style="display:none;">
+        <div class="form-field">
+          <label for="q-logocolor">Logo color</label>
+          <select id="q-logocolor" name="Logo color"></select>
+        </div>
+      </div>
       <div class="form-field">
         <label for="q-photos">Photos of your mounting point, and/or your logo file</label>
         <input type="file" id="q-photos" name="attachment" accept="image/png, image/jpeg, image/heic">
@@ -198,7 +221,7 @@
       </div>
       <div class="form-field">
         <label for="q-notes">Notes</label>
-        <textarea id="q-notes" name="Notes" placeholder="Color preference, timeline, mounting details, anything else we should know"></textarea>
+        <textarea id="q-notes" name="Notes" placeholder="Timeline, mounting details, anything else we should know"></textarea>
       </div>
       <div class="form-field form-checkbox">
         <label><input type="checkbox" name="Agreed to returns policy" value="Yes" required> I've read and agree to the <a href="returns.html" target="_blank" rel="noopener">Returns &amp; Shipping policy</a></label>
@@ -274,6 +297,45 @@
       document.querySelectorAll('.nav-item.open').forEach(function (item) { item.classList.remove('open'); });
     }
   });
+</script>
+<script>
+  (function () {
+    var COLORS = {
+      Satin: ['Jade White', 'Beige', 'Gold', 'Silver', 'Gray', 'Bronze', 'Brown', 'Red', 'Magenta', 'Pink', 'Orange', 'Yellow', 'Bambu Green', 'Mistletoe Green', 'Cyan', 'Blue', 'Purple', 'Blue Gray', 'Light Gray', 'Dark Gray', 'Black'],
+      Gloss: ['Red', 'Orange', 'Yellow', 'Reflex Blue', 'Navy Blue', 'Misty Blue', 'Green', 'Pine Green', 'Dark Brown', 'Dark Beige', 'Black', 'Gray', 'White']
+    };
+    var finishSelect = document.getElementById('q-finish');
+    var bodyColorSelect = document.getElementById('q-bodycolor');
+    var logoCheckbox = document.getElementById('q-logo');
+    var logoColorRow = document.getElementById('q-logo-color-row');
+    var logoColorSelect = document.getElementById('q-logocolor');
+
+    function fillColors(select, finish) {
+      if (!select) return;
+      select.innerHTML = '';
+      COLORS[finish].forEach(function (name) {
+        var opt = document.createElement('option');
+        opt.value = name;
+        opt.textContent = name;
+        select.appendChild(opt);
+      });
+    }
+
+    if (finishSelect) {
+      finishSelect.addEventListener('change', function () {
+        fillColors(bodyColorSelect, finishSelect.value);
+        fillColors(logoColorSelect, finishSelect.value);
+      });
+      fillColors(bodyColorSelect, finishSelect.value);
+      fillColors(logoColorSelect, finishSelect.value);
+    }
+
+    if (logoCheckbox && logoColorRow) {
+      logoCheckbox.addEventListener('change', function () {
+        logoColorRow.style.display = logoCheckbox.checked ? '' : 'none';
+      });
+    }
+  })();
 </script>
 <script>
   (function () {
