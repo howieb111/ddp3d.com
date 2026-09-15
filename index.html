@@ -70,11 +70,12 @@
 <div class="wrap">
   <div class="product-hero home-hero">
     <div>
-      <div class="hero-media-row">
+      <div class="hero-strip">
+        <button class="gallery-arrow" id="strip-prev" aria-label="Previous">‹</button>
+        <img class="hero-strip-img" id="strip-img-prev" alt="">
         <div class="gallery-main" id="home-gallery-main" style="transition:opacity 0.35s ease;"><img id="home-main-img" src="" alt=""></div>
-        <div class="hero-ticker" aria-hidden="true">
-          <div class="hero-ticker-track" id="hero-ticker-track"></div>
-        </div>
+        <img class="hero-strip-img" id="strip-img-next" alt="">
+        <button class="gallery-arrow" id="strip-next" aria-label="Next">›</button>
       </div>
     </div>
     <div>
@@ -190,42 +191,77 @@
   });
 
   (function () {
-    // Single static product for now — no scroll/autoplay. Add more entries
-    // back to this array (and restore the carousel logic) once there's more to show.
-    var slide = { img: 'assets/pch-2.jpg', title: 'Custom Pencil & Card Holders', desc: 'Your logo, your size, your mounting point — started as a discreet pew hymnal rack mount.', link: 'hymnal-pencil-card.html', cta: 'View product →' };
+    // One unified hero strip: the real product slide is mixed into the same
+    // sequence as the decorative example photos (which don't link anywhere).
+    // Prev/next thumbnails are faded previews either side of the big current
+    // image; title/desc/CTA only update on product slides, so they stay put
+    // (showing the last real product) while decorative photos cycle through.
+    // Auto-advances; manual prev/next pauses autoplay for 30s before resuming.
+    var PRODUCT = { type: 'product', img: 'assets/pch-2.jpg', title: 'Custom Pencil & Card Holders', desc: 'Your logo, your size, your mounting point — started as a discreet pew hymnal rack mount.', link: 'hymnal-pencil-card.html', cta: 'View product →' };
+    function photo(n) { return { type: 'photo', img: 'assets/hero-scroll-' + n + '.jpg' }; }
+
+    var SLIDES = [
+      PRODUCT, photo(3), photo(9), photo(1), photo(14),
+      PRODUCT, photo(6), photo(10), photo(2), photo(17),
+      PRODUCT, photo(13), photo(11), photo(4), photo(19),
+      PRODUCT, photo(7), photo(12), photo(16), photo(5),
+      PRODUCT, photo(18)
+    ];
+    var idx = 0;
 
     var mainImg = document.getElementById('home-main-img');
+    var prevImg = document.getElementById('strip-img-prev');
+    var nextImg = document.getElementById('strip-img-next');
+    var prevBtn = document.getElementById('strip-prev');
+    var nextBtn = document.getElementById('strip-next');
     var titleEl = document.getElementById('home-title');
     var descEl = document.getElementById('home-desc');
     var ctaEl = document.getElementById('home-cta');
+    if (!mainImg) return;
 
-    mainImg.src = slide.img;
-    mainImg.alt = slide.title;
-    titleEl.textContent = slide.title;
-    descEl.textContent = slide.desc;
-    ctaEl.href = slide.link;
-    ctaEl.textContent = slide.cta;
-  })();
+    function render() {
+      var slide = SLIDES[idx];
+      var prevSlide = SLIDES[(idx - 1 + SLIDES.length) % SLIDES.length];
+      var nextSlide = SLIDES[(idx + 1) % SLIDES.length];
 
-  (function () {
-    // Decorative side ticker — a scrolling filmstrip of assorted printed parts,
-    // shown next to the hero image. Not clickable, order deliberately mixes
-    // real photos with CAD renderings so the renders aren't clumped together.
-    var TICKER_ORDER = [3, 9, 1, 14, 6, 10, 2, 17, 13, 11, 4, 19, 7, 12, 16, 5, 18];
-    var trackEl = document.getElementById('hero-ticker-track');
-    if (!trackEl) return;
+      mainImg.src = slide.img;
+      mainImg.alt = slide.type === 'product' ? slide.title : '';
+      prevImg.src = prevSlide.img;
+      nextImg.src = nextSlide.img;
 
-    function buildSet() {
-      TICKER_ORDER.forEach(function (n) {
-        var img = document.createElement('img');
-        img.src = 'assets/hero-scroll-' + n + '.jpg';
-        img.alt = '';
-        img.loading = 'lazy';
-        trackEl.appendChild(img);
-      });
+      if (slide.type === 'product') {
+        titleEl.textContent = slide.title;
+        descEl.textContent = slide.desc;
+        ctaEl.href = slide.link;
+        ctaEl.textContent = slide.cta;
+      }
     }
-    buildSet();
-    buildSet(); // duplicate the set so the loop is seamless
+
+    var autoTimer = null;
+    var resumeTimer = null;
+
+    function advance(step) {
+      idx = (idx + step + SLIDES.length) % SLIDES.length;
+      render();
+    }
+    function stopAuto() {
+      if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
+    }
+    function startAuto() {
+      stopAuto();
+      autoTimer = setInterval(function () { advance(1); }, 3500);
+    }
+    function pauseThenResume() {
+      stopAuto();
+      if (resumeTimer) clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(startAuto, 30000);
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', function () { advance(-1); pauseThenResume(); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { advance(1); pauseThenResume(); });
+
+    render();
+    startAuto();
   })();
 </script>
 
