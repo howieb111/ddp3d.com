@@ -188,121 +188,24 @@
   });
 
   (function () {
-    var data = [
-      { cls: 's1', img: 'assets/basket-showcase.jpg', title: 'Fly-Fishing Stripping Basket', label: 'Stripping Basket', desc: 'Made in the USA from marine-grade ASA, in three wall heights to match how you fish.', link: 'stripping-basket.html', cta: 'View product →' },
-      { cls: 's3', img: 'assets/pch-2.jpg', title: 'Custom Pencil & Card Holders', label: 'Pencil & Card Holders', desc: 'Your logo, your size, your mounting point — started as a discreet pew hymnal rack mount.', link: 'hymnal-pencil-card.html', cta: 'View product →' }
-    ];
+    // Single static product for now — no scroll/autoplay. Add more entries
+    // back to this array (and restore the carousel logic) once there's more to show.
+    var slide = { img: 'assets/pch-2.jpg', title: 'Custom Pencil & Card Holders', desc: 'Your logo, your size, your mounting point — started as a discreet pew hymnal rack mount.', link: 'hymnal-pencil-card.html', cta: 'View product →' };
 
-    var visibleCount = 4;
-    var current = 0;
-    var stripStart = 0;
-    var autoplayTimer = null;
-
-    var mainEl = document.getElementById('home-gallery-main');
     var mainImg = document.getElementById('home-main-img');
-    var stripEl = document.getElementById('home-gallery-strip');
-    var arrowLeft = document.getElementById('home-arrow-left');
-    var arrowRight = document.getElementById('home-arrow-right');
+    var stripWrap = document.querySelector('.gallery-strip-wrap');
     var titleEl = document.getElementById('home-title');
     var descEl = document.getElementById('home-desc');
     var ctaEl = document.getElementById('home-cta');
 
-    function setMain(slide) {
-      mainEl.style.opacity = '0';
-      setTimeout(function () {
-        mainEl.classList.remove('s1', 's2', 's3');
-        var existingLabel = mainEl.querySelector('.placeholder-label');
-        if (existingLabel) existingLabel.remove();
-        if (slide.img) {
-          mainImg.style.display = '';
-          mainImg.src = slide.img;
-          mainImg.alt = slide.title;
-        } else {
-          mainImg.style.display = 'none';
-          mainEl.classList.add(slide.cls);
-          var label = document.createElement('span');
-          label.className = 'placeholder-label';
-          label.textContent = slide.title;
-          mainEl.appendChild(label);
-        }
-        titleEl.textContent = slide.title;
-        descEl.textContent = slide.desc;
-        ctaEl.href = slide.link;
-        ctaEl.textContent = slide.cta;
-        mainEl.style.opacity = '1';
-      }, 250);
-    }
+    if (stripWrap) stripWrap.style.display = 'none';
 
-    function renderStrip() {
-      stripEl.innerHTML = '';
-      var end = Math.min(stripStart + visibleCount, data.length);
-      for (var i = stripStart; i < end; i++) {
-        (function (idx) {
-          var slide = data[idx];
-          var thumb = document.createElement('div');
-          thumb.className = 'gallery-thumb' + (idx === current ? ' active' : '') + (slide.img ? '' : ' ' + slide.cls);
-          if (slide.img) {
-            var img = document.createElement('img');
-            img.src = slide.img;
-            img.alt = slide.title;
-            thumb.appendChild(img);
-          }
-          var label = document.createElement('span');
-          label.className = 'thumb-label';
-          label.textContent = slide.label;
-          thumb.appendChild(label);
-          thumb.addEventListener('click', function () {
-            stopAutoplay();
-            current = idx;
-            setMain(slide);
-            renderStrip();
-          });
-          stripEl.appendChild(thumb);
-        })(i);
-      }
-      if (data.length > visibleCount) {
-        arrowLeft.style.display = '';
-        arrowRight.style.display = '';
-        arrowLeft.disabled = stripStart === 0;
-        arrowRight.disabled = end >= data.length;
-      } else {
-        arrowLeft.style.display = 'none';
-        arrowRight.style.display = 'none';
-      }
-    }
-
-    function stopAutoplay() {
-      if (autoplayTimer) { clearInterval(autoplayTimer); autoplayTimer = null; }
-    }
-
-    function startAutoplay() {
-      stopAutoplay();
-      autoplayTimer = setInterval(function () {
-        current = (current + 1) % data.length;
-        if (current < stripStart || current >= stripStart + visibleCount) {
-          stripStart = Math.min(current, Math.max(0, data.length - visibleCount));
-        }
-        setMain(data[current]);
-        renderStrip();
-      }, 4500);
-    }
-
-    mainEl.addEventListener('click', function () { stopAutoplay(); });
-
-    arrowLeft.addEventListener('click', function () {
-      stopAutoplay();
-      stripStart = Math.max(0, stripStart - 1);
-      renderStrip();
-    });
-    arrowRight.addEventListener('click', function () {
-      stopAutoplay();
-      stripStart = Math.min(Math.max(0, data.length - visibleCount), stripStart + 1);
-      renderStrip();
-    });
-
-    setMain(data[current]);
-    renderStrip();
-    startAutoplay();
+    mainImg.src = slide.img;
+    mainImg.alt = slide.title;
+    titleEl.textContent = slide.title;
+    descEl.textContent = slide.desc;
+    ctaEl.href = slide.link;
+    ctaEl.textContent = slide.cta;
   })();
 </script>
 
