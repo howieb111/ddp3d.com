@@ -28,7 +28,7 @@
         <a href="products.html" class="nav-link">Products<span class="nav-caret" aria-hidden="true">▾</span></a>
         <div class="nav-dropdown"><div class="nav-dropdown-inner">
           <a href="stripping-basket.html">Fly-Fishing Stripping Basket</a>
-          <a href="hymnal-pencil-card.html">Hymnal Rack Mounted Pencil and Card Holders</a>
+          <a href="hymnal-pencil-card.html">Custom Pencil &amp; Card Holders</a>
           <a href="standard-holders.html">Standard Card, Brochure &amp; Pencil Holders</a>
           <a href="custom-projects.html">Custom Design, Development &amp; Printing</a>
           <div class="nav-cat-label">Coming Soon</div>
@@ -205,6 +205,7 @@
     }
 
     var CARD_SIZES = { '3x5': '3x5" index card', '4x6': '4x6" index card' };
+    var MATERIAL_NAMES = { 'pla-basic': 'PLA Basic', 'petg-basic': 'PETG Basic' };
 
     function variantLabel(item) {
       var parts = [];
@@ -230,6 +231,9 @@
         parts.push(slotBits.join(', '));
       } else if (item.productKey === 'standard-pencil-card-holder') {
         parts.push('Card only, no pen/pencil slots');
+      }
+      if (item.material && item.color) {
+        parts.push((MATERIAL_NAMES[item.material] || item.material) + ' — ' + item.color);
       }
       return parts.join(' · ');
     }

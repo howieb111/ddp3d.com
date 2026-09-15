@@ -22,8 +22,12 @@
 <style>
   .sh-product { padding: 40px 0; }
   .sh-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
-  .sh-image { aspect-ratio: 1; background: var(--photo-gray); border-radius: 12px; overflow: hidden; }
+  .sh-image { position: relative; aspect-ratio: 1; background: var(--photo-gray); border-radius: 12px; overflow: hidden; }
   .sh-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .sh-color-overlay { position: absolute; inset: 0; mix-blend-mode: color; opacity: 0.85; pointer-events: none; transition: background-color 0.15s; }
+  .sh-color-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .sh-select { padding: 9px 12px; border: 1.5px solid rgba(140, 136, 128, 0.4); border-radius: 8px; font-size: 0.88rem; font-weight: 500; color: var(--navy); background: #fff; }
+  .sh-swatch { width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid rgba(140, 136, 128, 0.4); flex: 0 0 auto; }
   .sh-options { margin-top: 18px; }
   .sh-option-group { margin-bottom: 18px; }
   .sh-option-group label.group-label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
@@ -74,7 +78,7 @@
         <a href="products.html" class="nav-link">Products<span class="nav-caret" aria-hidden="true">▾</span></a>
         <div class="nav-dropdown"><div class="nav-dropdown-inner">
           <a href="stripping-basket.html">Fly-Fishing Stripping Basket</a>
-          <a href="hymnal-pencil-card.html">Hymnal Rack Mounted Pencil and Card Holders</a>
+          <a href="hymnal-pencil-card.html">Custom Pencil &amp; Card Holders</a>
           <a href="standard-holders.html">Standard Card, Brochure &amp; Pencil Holders</a>
           <a href="custom-projects.html">Custom Design, Development &amp; Printing</a>
           <div class="nav-cat-label">Coming Soon</div>
@@ -131,6 +135,7 @@
   <div class="wrap sh-layout">
     <div class="sh-image">
       <img id="img-card" src="assets/placeholder-card-hanging.svg" alt="Standard Card Holder">
+      <div class="sh-color-overlay" data-color-overlay></div>
     </div>
     <div>
       <div class="card-tag tag-live">Ready to ship</div>
@@ -153,6 +158,17 @@
             <label><input type="radio" name="card-rail" value="3/4&quot;"> 3/4"</label>
           </div>
         </div>
+        <div class="sh-option-group">
+          <label class="group-label">Material &amp; color</label>
+          <div class="sh-color-row">
+            <select class="sh-select" data-material>
+              <option value="pla-basic">PLA Basic</option>
+              <option value="petg-basic">PETG Basic</option>
+            </select>
+            <select class="sh-select" data-color></select>
+            <span class="sh-swatch" data-swatch></span>
+          </div>
+        </div>
         <div class="sh-qty-row">
           <label class="group-label" style="margin:0;">Qty</label>
           <input type="number" min="1" value="1" data-qty>
@@ -169,11 +185,12 @@
   <div class="wrap sh-layout">
     <div class="sh-image">
       <img id="img-pencilcard" src="assets/standard-pencilcard-hanging.png" alt="Standard Pencil & Card Holder">
+      <div class="sh-color-overlay" data-color-overlay></div>
     </div>
     <div>
       <div class="card-tag tag-live">Ready to ship</div>
       <h2>Standard Pencil &amp; Card Holder</h2>
-      <p>Index-card size plus a pencil slot, in your choice of uniform or varying height. Hangs on a rail or ledge, or sits freestanding on a tabletop.</p>
+      <p>Index-card size plus your choice of pen, pencil, and golf-pencil slots. Hangs on a rail or ledge, or sits freestanding on a tabletop.</p>
       <p class="sh-price">$9.00</p>
 
       <div class="sh-options" data-product="pencilcard">
@@ -189,13 +206,6 @@
           <div class="sh-radio-row">
             <label><input type="radio" name="pencilcard-rail" value="1/2&quot;" checked> 1/2"</label>
             <label><input type="radio" name="pencilcard-rail" value="3/4&quot;"> 3/4"</label>
-          </div>
-        </div>
-        <div class="sh-option-group">
-          <label class="group-label">Height style</label>
-          <div class="sh-radio-row">
-            <label><input type="radio" name="pencilcard-height" value="uniform" checked> Uniform height</label>
-            <label><input type="radio" name="pencilcard-height" value="varying"> Varying height</label>
           </div>
         </div>
         <div class="sh-option-group">
@@ -220,6 +230,17 @@
             <label>Golf pencils<input type="number" min="0" max="4" value="0" data-golf-count></label>
           </div>
           <p class="sh-slot-note" data-slot-note>0 of 4 slots used</p>
+        </div>
+        <div class="sh-option-group">
+          <label class="group-label">Material &amp; color</label>
+          <div class="sh-color-row">
+            <select class="sh-select" data-material>
+              <option value="pla-basic">PLA Basic</option>
+              <option value="petg-basic">PETG Basic</option>
+            </select>
+            <select class="sh-select" data-color></select>
+            <span class="sh-swatch" data-swatch></span>
+          </div>
         </div>
         <div class="sh-qty-row">
           <label class="group-label" style="margin:0;">Qty</label>
@@ -250,6 +271,7 @@
   <div class="wrap sh-layout">
     <div class="sh-image">
       <img id="img-brochure" src="assets/placeholder-brochure-hanging.svg" alt="Standard Brochure Holder">
+      <div class="sh-color-overlay" data-color-overlay></div>
     </div>
     <div>
       <div class="card-tag tag-live">Ready to ship</div>
@@ -272,6 +294,17 @@
             <label><input type="radio" name="brochure-rail" value="3/4&quot;"> 3/4"</label>
           </div>
         </div>
+        <div class="sh-option-group">
+          <label class="group-label">Material &amp; color</label>
+          <div class="sh-color-row">
+            <select class="sh-select" data-material>
+              <option value="pla-basic">PLA Basic</option>
+              <option value="petg-basic">PETG Basic</option>
+            </select>
+            <select class="sh-select" data-color></select>
+            <span class="sh-swatch" data-swatch></span>
+          </div>
+        </div>
         <div class="sh-qty-row">
           <label class="group-label" style="margin:0;">Qty</label>
           <input type="number" min="1" value="1" data-qty>
@@ -287,7 +320,7 @@
   <div class="wrap wrap-narrow">
     <div class="section-head">
       <h2>Need something custom instead?</h2>
-      <p>These are fixed sizes with no design review. If you need a different size, a different mount, or want us to check the fit before you order, see the <a href="hymnal-pencil-card.html">custom &amp; custom-fit holders</a> instead.</p>
+      <p>These are fixed sizes with no design review — the logo option isn't offered here. If you want your logo on it, a non-standard size, or want us to check the fit before you order, see the <a href="hymnal-pencil-card.html">custom &amp; logo-customized holders</a> instead.</p>
     </div>
   </div>
 </section>
@@ -363,10 +396,33 @@
       card: { hanging: 'assets/placeholder-card-hanging.svg', tabletop: 'assets/placeholder-card-tabletop.svg' },
       brochure: { hanging: 'assets/placeholder-brochure-hanging.svg', tabletop: 'assets/placeholder-brochure-tabletop.svg' },
       pencilcard: {
-        hanging_uniform: 'assets/standard-pencilcard-hanging.png',
-        hanging_varying: 'assets/standard-pencilcard-hanging.png',
-        tabletop_uniform: 'assets/standard-pencilcard-tabletop.png',
-        tabletop_varying: 'assets/standard-pencilcard-tabletop.png'
+        hanging: 'assets/standard-pencilcard-hanging.png',
+        tabletop: 'assets/standard-pencilcard-tabletop.png'
+      }
+    };
+
+    // Bambu Lab filament colors, confirmed live from their store Sept 2026.
+    // PETG Basic was recently reformulated/relaunched — recheck periodically.
+    var MATERIALS = {
+      'pla-basic': {
+        name: 'PLA Basic',
+        colors: {
+          'Jade White': '#FFFFFF', 'Beige': '#F7E6DE', 'Gold': '#E4BD68', 'Silver': '#A6A9AA',
+          'Gray': '#8E9089', 'Bronze': '#847D48', 'Brown': '#9D432C', 'Red': '#C12E1F',
+          'Magenta': '#EC008C', 'Pink': '#F55A74', 'Orange': '#FF6A13', 'Yellow': '#F4EE2A',
+          'Bambu Green': '#00AE42', 'Mistletoe Green': '#3F8E43', 'Cyan': '#0086D6', 'Blue': '#0A2989',
+          'Purple': '#5E43B7', 'Blue Gray': '#5B6579', 'Light Gray': '#D1D3D5', 'Dark Gray': '#545454',
+          'Black': '#000000'
+        }
+      },
+      'petg-basic': {
+        name: 'PETG Basic',
+        colors: {
+          'Red': '#D6001C', 'Orange': '#FF671F', 'Yellow': '#FCE300', 'Reflex Blue': '#001489',
+          'Navy Blue': '#0086D6', 'Misty Blue': '#688197', 'Green': '#009639', 'Pine Green': '#034638',
+          'Dark Brown': '#4F2C1D', 'Dark Beige': '#DBC8B6', 'Black': '#000000', 'Gray': '#7F7E83',
+          'White': '#FFFFFF'
+        }
       }
     };
 
@@ -376,17 +432,38 @@
       var railGroup = group.querySelector('[data-rail-group]');
       var mountRadios = group.querySelectorAll('input[name="' + productSlug + '-mount"]');
       var railRadios = group.querySelectorAll('input[name="' + productSlug + '-rail"]');
-      var heightRadios = group.querySelectorAll('input[name="' + productSlug + '-height"]');
       var cardSizeRadios = group.querySelectorAll('input[name="' + productSlug + '-cardsize"]');
       var cutoutRadios = group.querySelectorAll('input[name="' + productSlug + '-cutout"]');
       var penInput = group.querySelector('[data-pen-count]');
       var pencilInput = group.querySelector('[data-pencil-count]');
       var golfInput = group.querySelector('[data-golf-count]');
       var slotNoteEl = group.querySelector('[data-slot-note]');
+      var materialSelect = group.querySelector('[data-material]');
+      var colorSelect = group.querySelector('[data-color]');
+      var swatchEl = group.querySelector('[data-swatch]');
+      var overlayEl = img && img.parentElement ? img.parentElement.querySelector('[data-color-overlay]') : null;
       var qtyInput = group.querySelector('[data-qty]');
       var addBtn = group.querySelector('[data-add-to-cart]');
       var statusEl = group.querySelector('[data-status]');
       var MAX_SLOTS = 4;
+
+      function populateColors() {
+        if (!materialSelect || !colorSelect) return;
+        var colors = MATERIALS[materialSelect.value].colors;
+        colorSelect.innerHTML = '';
+        Object.keys(colors).forEach(function (name) {
+          var opt = document.createElement('option');
+          opt.value = name;
+          opt.textContent = name;
+          colorSelect.appendChild(opt);
+        });
+      }
+      function updateColorPreview() {
+        if (!materialSelect || !colorSelect) return;
+        var hex = (MATERIALS[materialSelect.value] && MATERIALS[materialSelect.value].colors[colorSelect.value]) || '#cccccc';
+        if (swatchEl) swatchEl.style.backgroundColor = hex;
+        if (overlayEl) overlayEl.style.backgroundColor = hex;
+      }
 
       function currentMount() {
         var checked = group.querySelector('input[name="' + productSlug + '-mount"]:checked');
@@ -395,11 +472,6 @@
       function currentRail() {
         var checked = group.querySelector('input[name="' + productSlug + '-rail"]:checked');
         return checked ? checked.value : '1/2"';
-      }
-      function currentHeight() {
-        if (!heightRadios.length) return null;
-        var checked = group.querySelector('input[name="' + productSlug + '-height"]:checked');
-        return checked ? checked.value : 'uniform';
       }
       function currentCardSize() {
         if (!cardSizeRadios.length) return null;
@@ -433,8 +505,7 @@
         var mount = currentMount();
         if (!img) return;
         if (productSlug === 'pencilcard') {
-          var height = currentHeight() || 'uniform';
-          img.src = IMAGES.pencilcard[mount + '_' + height];
+          img.src = IMAGES.pencilcard[mount];
         } else {
           img.src = IMAGES[productSlug][mount];
         }
@@ -447,14 +518,21 @@
 
       mountRadios.forEach(function (r) { r.addEventListener('change', function () { updateRailVisibility(); updateImage(); }); });
       railRadios.forEach(function (r) { r.addEventListener('change', updateImage); });
-      heightRadios.forEach(function (r) { r.addEventListener('change', updateImage); });
       [penInput, pencilInput, golfInput].forEach(function (input) {
         if (input) input.addEventListener('input', updateSlotNote);
       });
+      if (materialSelect) {
+        materialSelect.addEventListener('change', function () { populateColors(); updateColorPreview(); });
+      }
+      if (colorSelect) {
+        colorSelect.addEventListener('change', updateColorPreview);
+      }
 
       updateRailVisibility();
       updateImage();
       updateSlotNote();
+      populateColors();
+      updateColorPreview();
 
       addBtn.addEventListener('click', function () {
         if (totalSlots() > MAX_SLOTS) return;
@@ -464,8 +542,6 @@
           quantity: Math.max(1, parseInt(qtyInput.value, 10) || 1)
         };
         if (payload.mountStyle === 'hanging') payload.railThickness = currentRail();
-        var height = currentHeight();
-        if (height) payload.heightStyle = height;
         var cardSize = currentCardSize();
         if (cardSize) {
           payload.cardSize = cardSize;
@@ -474,6 +550,8 @@
           payload.pencilCount = slotCount(pencilInput);
           payload.golfPencilCount = slotCount(golfInput);
         }
+        if (materialSelect) payload.material = materialSelect.value;
+        if (colorSelect) payload.color = colorSelect.value;
 
         addBtn.disabled = true;
         statusEl.className = 'sh-status';
