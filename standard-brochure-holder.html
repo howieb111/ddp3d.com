@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Standard Brochure Holder — ddp3d</title>
+<meta name="description" content="Instant-checkout hanging and tabletop brochure holder from ddp3d — tri-fold size, ready to ship.">
+<link rel="canonical" href="https://ddp3d.com/standard-brochure-holder.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ddp3d">
+<meta property="og:title" content="Standard Brochure Holder — ddp3d">
+<meta property="og:description" content="Instant-checkout hanging and tabletop brochure holder from ddp3d — tri-fold size, ready to ship.">
+<meta property="og:url" content="https://ddp3d.com/standard-brochure-holder.html">
+<meta property="og:image" content="https://ddp3d.com/assets/standard-pencilcard-ex-card-only.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Standard Brochure Holder — ddp3d">
+<meta name="twitter:description" content="Instant-checkout hanging and tabletop brochure holder from ddp3d — tri-fold size, ready to ship.">
+<meta name="twitter:image" content="https://ddp3d.com/assets/standard-pencilcard-ex-card-only.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .sh-product { padding: 40px 0; }
+  .sh-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+  .sh-image { position: relative; aspect-ratio: 1; background: var(--photo-gray); border-radius: 12px; overflow: hidden; }
+  .sh-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .sh-color-overlay { position: absolute; inset: 0; mix-blend-mode: color; opacity: 0.85; pointer-events: none; transition: background-color 0.15s; }
+  .sh-color-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .sh-select { padding: 9px 12px; border: 1.5px solid rgba(140, 136, 128, 0.4); border-radius: 8px; font-size: 0.88rem; font-weight: 500; color: var(--navy); background: #fff; }
+  .sh-swatch { width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid rgba(140, 136, 128, 0.4); flex: 0 0 auto; }
+  .sh-options { margin-top: 18px; }
+  .sh-option-group { margin-bottom: 18px; }
+  .sh-option-group label.group-label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
+  .sh-radio-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .sh-radio-row label {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1.5px solid rgba(140, 136, 128, 0.4);
+    border-radius: 999px; padding: 8px 16px;
+    font-size: 0.88rem; font-weight: 500; color: var(--navy);
+    cursor: pointer; background: #fff;
+  }
+  .sh-radio-row input { margin: 0; }
+  .sh-radio-row label:has(input:checked) { border-color: var(--blue); background: var(--blue-tint); color: var(--blue); }
+  .sh-qty-row { display: flex; align-items: center; gap: 14px; margin-top: 20px; flex-wrap: wrap; }
+  .sh-qty-row input[type="number"] { width: 72px; padding: 10px; border: 1.5px solid rgba(140, 136, 128, 0.4); border-radius: 8px; font-size: 0.95rem; }
+  .sh-price { font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--navy); margin: 0 0 4px; }
+  .sh-status { margin-top: 12px; font-size: 0.88rem; font-weight: 600; display: none; }
+  .sh-status.ok { color: #1e4d28; display: block; }
+  .sh-status.err { color: #a33; display: block; }
+  @media (max-width: 780px) {
+    .sh-layout { grid-template-columns: 1fr; }
+  }
+  .related-links { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 14px; }
+  .related-links a { border: 1.5px solid rgba(140, 136, 128, 0.4); border-radius: 999px; padding: 8px 16px; font-size: 0.88rem; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-top">
+    <a href="index.html" class="wordmark"><img src="assets/ddp3d-logo.png" alt="ddp3d — Design, Develop, Print"></a>
+    <a href="cart.html" class="cart-link" aria-label="View cart">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+      <span class="cart-badge" id="cart-badge"></span>
+    </a>
+  </div>
+  <div class="wrap header-nav-row">
+    <nav class="main-nav">
+      <div class="nav-item">
+        <a href="products.html" class="nav-link">Products<span class="nav-caret" aria-hidden="true">▾</span></a>
+        <div class="nav-dropdown"><div class="nav-dropdown-inner">
+          <a href="stripping-basket.html">Fly-Fishing Stripping Basket</a>
+          <a href="hymnal-pencil-card.html">Custom Pencil &amp; Card Holders</a>
+          <a href="standard-card-holder.html">Standard Card Holder</a>
+          <a href="standard-brochure-holder.html">Standard Brochure Holder</a>
+          <a href="standard-pencil-card-holder.html">Standard Pencil &amp; Card Holder</a>
+          <a href="custom-projects.html">Custom Design, Development &amp; Printing</a>
+          <div class="nav-cat-label">Coming Soon</div>
+          <span class="disabled">Bicycle Flag Mount</span>
+          <span class="disabled">Bike Rack Wheel Cradle</span>
+          <span class="disabled">Hymnal Rack Tri-Fold Holder</span>
+          <span class="disabled">E-Drum Accessory Holder</span>
+          <span class="disabled">GE Thermostat Cover</span>
+          <a href="products.html" class="view-all">View all products →</a>
+        </div></div>
+      </div>
+      <div class="nav-item">
+        <a href="open-source.html" class="nav-link">Open Source<span class="nav-caret" aria-hidden="true">▾</span></a>
+        <div class="nav-dropdown"><div class="nav-dropdown-inner">
+          <a href="glassy-mcbuildplate.html">Glass &amp; Build Plate Holder</a>
+          <a href="fero-no-sticker.html">Fero-No-Sticker Mount</a>
+          <a href="holy-grail-desiccant.html">Holy Grail Desiccant Containers</a>
+          <a href="open-source.html#exhaust-system">Printer Exhaust System</a>
+          <a href="open-source.html" class="view-all">View all free files →</a>
+        </div></div>
+      </div>
+      <div class="nav-item"><a href="about.html" class="nav-link">About</a></div>
+      <div class="nav-item"><a href="index.html#contact" class="nav-link">Contact</a></div>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <p class="breadcrumb"><a href="products.html">Products</a> / Standard Brochure Holder</p>
+</div>
+
+<section class="statement">
+  <div class="wrap">
+    <h1>Standard Brochure Holder</h1>
+    <p>Fixed size, ready to ship — no design review, no waiting on a quote. Pick hanging or tabletop, measure your rail if you're hanging it, and check out instantly. We recommend ordering one first to confirm the fit before ordering the quantity you need.</p>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="wrap wrap-narrow">
+    <div class="section-head">
+      <h2>How to measure</h2>
+      <p>If you're mounting to a rail or ledge (Hanging), the only measurement that matters is its thickness. You want a loose, comfortable grip — snug enough to stay in place, but not so tight that it stresses the plastic. Too thin and it won't hold; too thick and it won't fit at all. Tabletop needs no measuring at all.</p>
+    </div>
+    <div class="sh-image" style="max-width:600px; margin:0 auto; aspect-ratio:600/420;">
+      <img src="assets/placeholder-measurement-guide.svg" alt="Diagram showing how to measure the rail thickness for a hanging holder">
+    </div>
+    <p class="form-note" style="text-align:center; margin-top:16px;">Real photos with marked-up measurement points are coming soon — these are placeholder diagrams for now.</p>
+  </div>
+</section>
+
+<!-- Standard Brochure Holder -->
+<section class="sh-product">
+  <div class="wrap sh-layout">
+    <div class="sh-image">
+      <img id="img-brochure" src="assets/standard-pencilcard-ex-card-only.jpg" alt="Standard Brochure Holder">
+      <div class="sh-color-overlay" data-color-overlay></div>
+    </div>
+    <div>
+      <div class="card-tag tag-live">Ready to ship</div>
+      <h2>Standard Brochure Holder</h2>
+      <p>Tri-fold brochure size, fixed dimensions. Hangs on a rail or ledge, or sits freestanding on a tabletop.</p>
+      <p class="sh-price">$9.00</p>
+      <p class="form-note" style="margin-top:-8px;">Photo shown is our card-only holder in the same style — brochure size is the same shape, just sized for a tri-fold.</p>
+
+      <div class="sh-options" data-product="brochure">
+        <div class="sh-option-group">
+          <label class="group-label">Mount style</label>
+          <div class="sh-radio-row">
+            <label><input type="radio" name="brochure-mount" value="hanging" checked> Hanging</label>
+            <label><input type="radio" name="brochure-mount" value="tabletop"> Tabletop</label>
+          </div>
+        </div>
+        <div class="sh-option-group" data-rail-group>
+          <label class="group-label">Rail / ledge thickness</label>
+          <div class="sh-radio-row">
+            <label><input type="radio" name="brochure-rail" value="1/2&quot;" checked> 1/2"</label>
+            <label><input type="radio" name="brochure-rail" value="3/4&quot;"> 3/4"</label>
+          </div>
+        </div>
+        <div class="sh-option-group">
+          <label class="group-label">Finish &amp; color</label>
+          <div class="sh-color-row">
+            <select class="sh-select" data-material>
+              <option value="pla-basic">Satin</option>
+              <option value="petg-basic">Gloss</option>
+            </select>
+            <select class="sh-select" data-color></select>
+            <span class="sh-swatch" data-swatch></span>
+          </div>
+        </div>
+        <div class="sh-qty-row">
+          <label class="group-label" style="margin:0;">Qty</label>
+          <input type="number" min="1" value="1" data-qty>
+          <button type="button" class="btn btn-terracotta" data-add-to-cart data-product-key="standard-brochure-holder">Add to cart →</button>
+        </div>
+        <p class="sh-status" data-status></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="wrap wrap-narrow">
+    <div class="section-head">
+      <h2>Looking for something else?</h2>
+    </div>
+    <div class="related-links">
+      <a href="standard-card-holder.html">Standard Card Holder →</a>
+      <a href="standard-pencil-card-holder.html">Standard Pencil &amp; Card Holder →</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap wrap-narrow">
+    <div class="section-head">
+      <h2>Need something custom instead?</h2>
+      <p>These are fixed sizes with no design review — the logo option isn't offered here. If you want your logo on it, a non-standard size, or want us to check the fit before you order, see the <a href="hymnal-pencil-card.html">custom &amp; logo-customized holders</a> instead.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer" id="contact">
+  <div class="wrap">
+    <nav class="footer-nav">
+      <a href="products.html">Products</a>
+      <a href="open-source.html">Open Source</a>
+      <a href="about.html">About</a>
+      <a href="returns.html">Returns</a>
+    </nav>
+    <div class="contact-list">
+      <div class="contact-group">
+        <a class="contact-email" href="tel:+17812264198">781-226-4198</a>
+        <span class="role">Call or text</span>
+      </div>
+      <div class="contact-group">
+        <a class="contact-email" href="mailto:info@ddp3d.com">info@ddp3d.com</a>
+        <span class="role">General inquiries</span>
+      </div>
+      <div class="contact-group">
+        <a class="contact-email" href="mailto:sales@ddp3d.com">sales@ddp3d.com</a>
+        <span class="role">Orders &amp; product questions</span>
+      </div>
+      <div class="contact-group">
+        <a class="contact-email" href="mailto:support@ddp3d.com">support@ddp3d.com</a>
+        <span class="role">Help with an existing order</span>
+      </div>
+    </div>
+    <p style="margin-top:24px;">&copy; <span id="year"></span> ddp3d. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="assets/cart.js"></script>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  document.querySelectorAll('.nav-item').forEach(function (item) {
+    var dropdown = item.querySelector('.nav-dropdown');
+    if (!dropdown) return;
+    var caret = item.querySelector('.nav-caret');
+    var closeTimer;
+    item.addEventListener('mouseenter', function () {
+      clearTimeout(closeTimer);
+      item.classList.add('open');
+    });
+    item.addEventListener('mouseleave', function () {
+      closeTimer = setTimeout(function () { item.classList.remove('open'); }, 200);
+    });
+    if (caret) {
+      caret.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        item.classList.toggle('open');
+      });
+    }
+  });
+  document.addEventListener('click', function (e) {
+    document.querySelectorAll('.nav-item.open').forEach(function (item) {
+      if (!item.contains(e.target)) item.classList.remove('open');
+    });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.nav-item.open').forEach(function (item) { item.classList.remove('open'); });
+    }
+  });
+</script>
+<script>
+  (function () {
+    var IMAGES = {
+      brochure: { hanging: 'assets/standard-pencilcard-ex-card-only.jpg', tabletop: 'assets/placeholder-brochure-tabletop.svg' }
+    };
+
+    // Bambu Lab filament colors, confirmed live from their store Sept 2026.
+    // PETG Basic was recently reformulated/relaunched — recheck periodically.
+    var MATERIALS = {
+      'pla-basic': {
+        name: 'Satin (PLA Basic)',
+        colors: {
+          'Jade White': '#FFFFFF', 'Beige': '#F7E6DE', 'Gold': '#E4BD68', 'Silver': '#A6A9AA',
+          'Gray': '#8E9089', 'Bronze': '#847D48', 'Brown': '#9D432C', 'Red': '#C12E1F',
+          'Magenta': '#EC008C', 'Pink': '#F55A74', 'Orange': '#FF6A13', 'Yellow': '#F4EE2A',
+          'Bambu Green': '#00AE42', 'Mistletoe Green': '#3F8E43', 'Cyan': '#0086D6', 'Blue': '#0A2989',
+          'Purple': '#5E43B7', 'Blue Gray': '#5B6579', 'Light Gray': '#D1D3D5', 'Dark Gray': '#545454',
+          'Black': '#000000'
+        }
+      },
+      'petg-basic': {
+        name: 'Gloss (PETG Basic)',
+        colors: {
+          'Red': '#D6001C', 'Orange': '#FF671F', 'Yellow': '#FCE300', 'Reflex Blue': '#001489',
+          'Navy Blue': '#0086D6', 'Misty Blue': '#688197', 'Green': '#009639', 'Pine Green': '#034638',
+          'Dark Brown': '#4F2C1D', 'Dark Beige': '#DBC8B6', 'Black': '#000000', 'Gray': '#7F7E83',
+          'White': '#FFFFFF'
+        }
+      }
+    };
+
+    document.querySelectorAll('.sh-options').forEach(function (group) {
+      var productSlug = group.getAttribute('data-product');
+      var img = document.getElementById('img-' + productSlug);
+      var railGroup = group.querySelector('[data-rail-group]');
+      var mountRadios = group.querySelectorAll('input[name="' + productSlug + '-mount"]');
+      var railRadios = group.querySelectorAll('input[name="' + productSlug + '-rail"]');
+      var cardSizeRadios = group.querySelectorAll('input[name="' + productSlug + '-cardsize"]');
+      var cutoutRadios = group.querySelectorAll('input[name="' + productSlug + '-cutout"]');
+      var penInput = group.querySelector('[data-pen-count]');
+      var pencilInput = group.querySelector('[data-pencil-count]');
+      var golfInput = group.querySelector('[data-golf-count]');
+      var slotNoteEl = group.querySelector('[data-slot-note]');
+      var materialSelect = group.querySelector('[data-material]');
+      var colorSelect = group.querySelector('[data-color]');
+      var swatchEl = group.querySelector('[data-swatch]');
+      var overlayEl = img && img.parentElement ? img.parentElement.querySelector('[data-color-overlay]') : null;
+      var qtyInput = group.querySelector('[data-qty]');
+      var addBtn = group.querySelector('[data-add-to-cart]');
+      var statusEl = group.querySelector('[data-status]');
+      var MAX_SLOTS = 4;
+
+      function populateColors() {
+        if (!materialSelect || !colorSelect) return;
+        var colors = MATERIALS[materialSelect.value].colors;
+        colorSelect.innerHTML = '';
+        Object.keys(colors).forEach(function (name) {
+          var opt = document.createElement('option');
+          opt.value = name;
+          opt.textContent = name;
+          colorSelect.appendChild(opt);
+        });
+      }
+      function updateColorPreview() {
+        if (!materialSelect || !colorSelect) return;
+        var hex = (MATERIALS[materialSelect.value] && MATERIALS[materialSelect.value].colors[colorSelect.value]) || '#cccccc';
+        if (swatchEl) swatchEl.style.backgroundColor = hex;
+        if (overlayEl) overlayEl.style.backgroundColor = hex;
+      }
+
+      function currentMount() {
+        var checked = group.querySelector('input[name="' + productSlug + '-mount"]:checked');
+        return checked ? checked.value : 'hanging';
+      }
+      function currentRail() {
+        var checked = group.querySelector('input[name="' + productSlug + '-rail"]:checked');
+        return checked ? checked.value : '1/2"';
+      }
+      function currentCardSize() {
+        if (!cardSizeRadios.length) return null;
+        var checked = group.querySelector('input[name="' + productSlug + '-cardsize"]:checked');
+        return checked ? checked.value : '3x5';
+      }
+      function currentCutout() {
+        if (!cutoutRadios.length) return null;
+        var checked = group.querySelector('input[name="' + productSlug + '-cutout"]:checked');
+        return checked ? checked.value : 'no';
+      }
+      function slotCount(input) {
+        return Math.max(0, parseInt(input && input.value, 10) || 0);
+      }
+      function totalSlots() {
+        if (!penInput) return 0;
+        return slotCount(penInput) + slotCount(pencilInput) + slotCount(golfInput);
+      }
+      function updateSlotNote() {
+        if (!slotNoteEl) return;
+        var total = totalSlots();
+        var over = total > MAX_SLOTS;
+        slotNoteEl.textContent = over
+          ? total + ' of ' + MAX_SLOTS + ' slots used — reduce by ' + (total - MAX_SLOTS) + ' to continue'
+          : total + ' of ' + MAX_SLOTS + ' slots used';
+        slotNoteEl.className = 'sh-slot-note' + (over ? ' over' : '');
+        if (addBtn) addBtn.disabled = over;
+      }
+
+      function updateImage() {
+        var mount = currentMount();
+        if (!img) return;
+        img.src = IMAGES[productSlug][mount];
+      }
+
+      function updateRailVisibility() {
+        if (!railGroup) return;
+        railGroup.style.display = currentMount() === 'hanging' ? '' : 'none';
+      }
+
+      mountRadios.forEach(function (r) { r.addEventListener('change', function () { updateRailVisibility(); updateImage(); }); });
+      railRadios.forEach(function (r) { r.addEventListener('change', updateImage); });
+      [penInput, pencilInput, golfInput].forEach(function (input) {
+        if (input) input.addEventListener('input', updateSlotNote);
+      });
+      if (materialSelect) {
+        materialSelect.addEventListener('change', function () { populateColors(); updateColorPreview(); });
+      }
+      if (colorSelect) {
+        colorSelect.addEventListener('change', updateColorPreview);
+      }
+
+      updateRailVisibility();
+      updateImage();
+      updateSlotNote();
+      populateColors();
+      updateColorPreview();
+
+      addBtn.addEventListener('click', function () {
+        if (totalSlots() > MAX_SLOTS) return;
+        var payload = {
+          productKey: addBtn.getAttribute('data-product-key'),
+          mountStyle: currentMount(),
+          quantity: Math.max(1, parseInt(qtyInput.value, 10) || 1)
+        };
+        if (payload.mountStyle === 'hanging') payload.railThickness = currentRail();
+        var cardSize = currentCardSize();
+        if (cardSize) {
+          payload.cardSize = cardSize;
+          payload.cutout = currentCutout();
+          payload.penCount = slotCount(penInput);
+          payload.pencilCount = slotCount(pencilInput);
+          payload.golfPencilCount = slotCount(golfInput);
+        }
+        if (materialSelect) payload.material = materialSelect.value;
+        if (colorSelect) payload.color = colorSelect.value;
+
+        addBtn.disabled = true;
+        statusEl.className = 'sh-status';
+        statusEl.style.display = 'none';
+
+        window.ddp3dCart.addToCart(payload).then(function () {
+          addBtn.disabled = false;
+          statusEl.textContent = 'Added to cart.';
+          statusEl.className = 'sh-status ok';
+        }).catch(function (err) {
+          addBtn.disabled = false;
+          statusEl.textContent = err.message || 'Could not add to cart — please try again.';
+          statusEl.className = 'sh-status err';
+        });
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
