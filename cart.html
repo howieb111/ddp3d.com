@@ -40,6 +40,7 @@
           <a href="hymnal-pencil-card.html">Custom Pencil &amp; Card Holders</a>
           <a href="standard-card-brochure-holder.html">Standard Card / Brochure Holder</a>
           <a href="standard-pencil-card-holder.html">Standard Pencil &amp; Card Holder</a>
+          <a href="speediance-gym-monster-mounts.html">Speediance Gym Monster Mounts</a>
           <a href="custom-projects.html">Custom Design, Development &amp; Printing</a>
           <div class="nav-cat-label">Coming Soon</div>
           <span class="disabled">Bicycle Flag Mount</span>
@@ -216,8 +217,15 @@
 
     var CARD_SIZES = { '3x5': '3x5" (Small Index Card)', '4x6': '4x6" (Medium Index Card)', '4x9': '4x9" (Trifold/Brochure)' };
     var MATERIAL_NAMES = { 'pla-basic': 'Satin', 'petg-basic': 'Gloss' };
+    var SPEEDIANCE_SIZES = { small: 'Small (1 hook set)', medium: 'Medium (2 hook sets)', large: 'Large (3 hook sets)' };
 
     function variantLabel(item) {
+      // No mount/finish concept for this product — bolt-on clamp, one PETG
+      // color pick. Short-circuit before the generic logic below.
+      if (item.productKey === 'speediance-gym-monster-mounts') {
+        var sPart = SPEEDIANCE_SIZES[item.cardSize] || item.cardSize;
+        return item.color ? sPart + ' · ' + item.color : sPart;
+      }
       var parts = [];
       if (item.mountStyle === 'hanging') {
         parts.push('Hanging (keyhole mount — screw or nail)');
