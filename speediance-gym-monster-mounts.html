@@ -62,7 +62,7 @@
   }
   .sh-radio-row input { margin: 0; }
   .sh-radio-row label:has(input:checked) { border-color: var(--blue); background: var(--blue-tint); color: var(--blue); }
-  .sh-size-blurb { font-size: 0.85rem; color: var(--navy); opacity: 0.8; margin: -8px 0 0; }
+  .sh-size-blurb { font-size: 0.85rem; color: var(--navy); opacity: 0.8; margin: 12px 0 0; }
   .sh-qty-row { display: flex; align-items: center; gap: 14px; margin-top: 20px; flex-wrap: wrap; }
   .sh-qty-row input[type="number"] { width: 72px; padding: 10px; border: 1.5px solid rgba(140, 136, 128, 0.4); border-radius: 8px; font-size: 0.95rem; }
   .sh-price { font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--navy); margin: 0 0 4px; }
@@ -135,7 +135,7 @@
 <section class="statement">
   <div class="wrap">
     <h1>Speediance Gym Monster 2 Accessory Mount Pair</h1>
-    <p>Stop piling attachments on the floor. This left and right pair clamps to the top of your Gym Monster 2 frame with a knob and bolt — no tape or adhesive — and holds your barbell, rowing bar, and hooks for handles, ropes and straps, all in one mount. Medium and Large sizes add a barbell foam pad holder too. Designed and printed in Massachusetts.</p>
+    <p>Stop piling attachments on the floor. This left and right pair clamps to the top of your Gym Monster 2 frame with included hand-tightened nuts and bolts — no tape or adhesive — and holds your barbell, rowing bar, and has hooks for your accessories, all in one mount. All sizes hold the barbell hook too, without using it to hold your barbell. Medium and Large sizes add a barbell foam pad holder too. Designed and printed in Massachusetts.</p>
   </div>
 </section>
 
@@ -185,15 +185,15 @@
       <h2>What's included</h2>
     </div>
     <ul class="speediance-bullets">
-      <li><strong>One mount, not two:</strong> Most owners would need a separate hook rack and a separate barbell/rowing bar holder. This combines both in one bolt-on mount.</li>
       <li><strong>Bolt-on clamp:</strong> A knurled knob and bolt (included) lock each mount to the rail. If it ever loosens, tighten the bolt — the threads have extra length for that. Bend relief in the clamp arms makes install and removal easier.</li>
-      <li><strong>Barbell and rowing bar holder:</strong> Two cradles on each mount, angled away from you, hold the barbell and the rowing bar that come with your Gym Monster package.</li>
+      <li><strong>Barbell and rowing bar holder:</strong> Two cradles on each mount, angled away from you, for safety, hold the barbell and the rowing bar.</li>
       <li id="foam-pad-bullet"><strong>Barbell foam pad holder</strong> (Medium and Large): Two short arms hold the pad. No pins to break and no full-width rod.</li>
-      <li data-hook-bullet><strong>3 hook sets per mount, 9 hooks:</strong> Each set has a front-facing, a rear-facing, and a side-facing hook, so your handles, ropes, ankle straps, D-rings and extender belt each get their own spot.</li>
+      <li><strong>Up to 3 hook sets per mount:</strong> Small has 1 set per mount (6 hooks total), Medium has 2 sets (12 hooks total), and Large has 3 sets (18 hooks total). Each set has a front-facing, a rear-facing, and a side-facing hook, so your handles, ropes, ankle straps, D-rings and extender belts each get their own spot.</li>
       <li><strong>Side hooks:</strong> Keep wide accessories, like tricep ropes, hanging narrow when you use a carabiner, just like they would without one. A carabiner turns whatever it holds a quarter turn, which makes wide accessories hang wide — the side-facing hook turns it back.</li>
-      <li><strong>Colors:</strong> Black, Gray, Red, Blue, Orange and Green, printed in Bambu PETG Basic.</li>
+      <li><strong>Durable PETG:</strong> Printed in PETG, a tougher and more flexible plastic than standard PLA — it resists cracking and flexes slightly under load instead of snapping, which suits a clamp that gets tightened and hooks that carry real weight.</li>
+      <li><strong>Colors:</strong> Black, Gray, Red, Blue, Orange and Green.</li>
     </ul>
-    <p class="speediance-note">One left and one right mount, with knobs and bolts included — no purchased hardware, everything is printed. Made for the Gym Monster 2. Colors may vary slightly from photos and between batches.</p>
+    <p class="speediance-note">One left and one right mount, with nuts and bolts included — no purchased hardware, everything is printed. Made for the Gym Monster 2. Colors may vary slightly from photos and between batches.</p>
     <p class="speediance-disclaimer">Not affiliated with or endorsed by Speediance. "Speediance" and "Gym Monster" are used only to describe compatibility.</p>
   </div>
 </section>
@@ -276,14 +276,13 @@
   (function () {
     // Mirrors the Worker's SPEEDIANCE_SIZE_PRICES — keep these in sync.
     var PRICES = { small: 32, medium: 43, large: 54 };
-    var HOOK_SETS = { small: 1, medium: 2, large: 3 };
     var BLURBS = {
       small: "For lighter setups that don't need every accessory hung at once.",
       medium: 'Holds more accessories, including the foam barbell pad.',
       large: "Holds everything that comes with the base package, and more. If you use most of what Speediance includes, this is the one to get."
     };
-    // Curated 6-color PETG Basic lineup — mirrors the Worker's
-    // SPEEDIANCE_COLORS. "Blue" is Bambu's Navy Blue spool.
+    // Curated 6-color PETG lineup — mirrors the Worker's SPEEDIANCE_COLORS.
+    // "Blue" is a mid-blue spool, not the near-black "Reflex Blue" option.
     var COLORS = {
       Black: '#000000',
       Gray: '#7F7E83',
@@ -303,7 +302,6 @@
     var addBtn = group.querySelector('[data-add-to-cart]');
     var statusEl = group.querySelector('[data-status]');
     var foamBulletEl = document.getElementById('foam-pad-bullet');
-    var hookBulletEl = document.querySelector('[data-hook-bullet]');
 
     function populateColors() {
       colorSelect.innerHTML = '';
@@ -327,11 +325,7 @@
       sizeBlurbEl.textContent = BLURBS[currentSize()];
     }
     function updateBullets() {
-      var size = currentSize();
-      foamBulletEl.style.display = size === 'small' ? 'none' : '';
-      var sets = HOOK_SETS[size];
-      var hooks = sets * 3;
-      hookBulletEl.innerHTML = '<strong>' + sets + ' hook set' + (sets === 1 ? '' : 's') + ' per mount, ' + hooks + ' hooks:</strong> Each set has a front-facing, a rear-facing, and a side-facing hook, so your handles, ropes, ankle straps, D-rings and extender belt each get their own spot.';
+      foamBulletEl.style.display = currentSize() === 'small' ? 'none' : '';
     }
     function updateColorPreview() {
       var hex = COLORS[colorSelect.value] || '#cccccc';
