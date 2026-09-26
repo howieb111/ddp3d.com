@@ -35,23 +35,6 @@
   .materials-list strong { color: var(--navy); }
   .care-block { margin-top: 28px; }
   .care-block h3 { font-family: 'Poppins', sans-serif; font-size: 1.15rem; color: var(--navy); margin: 0 0 10px; }
-  details.faq-item {
-    border: 1.5px solid rgba(140, 136, 128, 0.35);
-    border-radius: 10px;
-    padding: 14px 18px;
-    margin-bottom: 12px;
-    background: #fff;
-  }
-  details.faq-item summary {
-    font-weight: 600;
-    color: var(--navy);
-    cursor: pointer;
-    list-style: none;
-  }
-  details.faq-item summary::-webkit-details-marker { display: none; }
-  details.faq-item summary::before { content: "+ "; color: var(--blue); }
-  details.faq-item[open] summary::before { content: "\2212 "; }
-  details.faq-item p { margin: 12px 0 0; font-size: 0.95rem; }
 </style>
 </head>
 <body>
@@ -161,30 +144,6 @@
       <h3>Cleaning &amp; care</h3>
       <p>Most parts just need a rinse with water and a mild soap if they get dirty — no special cleaners needed. Avoid harsh solvents (acetone, brake cleaner, etc.), which can cloud or craze PETG and ABS parts, and skip the dishwasher — sustained heat can warp a printed part even if the plastic itself is heat-tolerant in normal use. For anything with a bolt (like the Gym Monster clip), an occasional hand-tighten is the only maintenance it needs; no oiling or lubrication required. If you've chosen the ASA option for extra outdoor durability (or have the stripping basket, which is ASA by default), no added UV protection is needed — that's exactly what ASA is for. Standard PETG parts hold up fine outdoors too, just with a longer-term fade timeline than ASA.</p>
     </div>
-  </div>
-</section>
-
-<section class="section section-alt" id="faq">
-  <div class="wrap wrap-narrow">
-    <div class="section-head">
-      <h2>Frequently Asked Questions</h2>
-    </div>
-    <details class="faq-item">
-      <summary>Can I attach accessories directly with the D-ring, or do I need a carabiner?</summary>
-      <p>Speediance accessories typically come with a D-ring or square ring already attached for connecting to the cable. On an earlier design, attaching that ring directly to the mount left less finger clearance around the bolt and nut. Using a carabiner as a go-between fixes this — clip the carabiner to the mount once, then swap accessories by opening and closing the carabiner's gate instead of handling the ring directly. The redesigned version (current listings) has added clearance and works fine either way.</p>
-    </details>
-    <details class="faq-item">
-      <summary>Why do my 3D printed parts have visible layer lines?</summary>
-      <p>3D printing works by melting filament and laying it down in layers, not injection molding, so visible layer lines are normal — especially on curved surfaces. I design around this where I can; the rearmost pin on the Large Gym Monster mount and the Bicycle Flag Holder both use a 45-degree chamfer instead of a shallow curve starting on the first layer, since that curve wouldn't bond well between layers otherwise.</p>
-    </details>
-    <details class="faq-item">
-      <summary>Why does the Gym Monster clip use a bolt instead of tape?</summary>
-      <p>All 3D printed clips relax their grip a bit over time under stress — it's just how plastic behaves. Many competitors use double-sided tape to compensate. It's not that I don't trust tape — it's just a pain to work with: it doesn't always look great, it's hard to reposition once placed, and it leaves residue behind. A bolt avoids all of that. If it ever feels loose, just hand-tighten it a bit, no tools needed. A hook may also sag very slightly over time depending on load, especially in a hot garage in summer.</p>
-    </details>
-    <details class="faq-item">
-      <summary>What filaments do you use, and why?</summary>
-      <p>PETG for most everyday parts — tough, impact-resistant, bonds well between layers. PLA where fine detail and a smooth finish matter, like embossed logos — with good design (rounded corners, the right print orientation) it holds up fine for everyday use; its real limit is heat, softening around 55–60°C, not toughness. ABS for anything exposed to repeated heat, like a hot car, since it's the same material used in most injection-molded car interior plastic. ASA for outdoor items like the stripping basket — as strong as ABS, with much better UV resistance so it won't fade or degrade in the sun.</p>
-    </details>
   </div>
 </section>
 

@@ -100,6 +100,23 @@
   .speediance-bullets strong { color: var(--navy); }
   .speediance-note { font-size: 0.85rem; color: var(--navy); opacity: 0.75; margin-top: 6px; }
   .speediance-disclaimer { font-size: 0.78rem; color: var(--navy); opacity: 0.6; margin-top: 18px; }
+  details.faq-item {
+    border: 1.5px solid rgba(140, 136, 128, 0.35);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    background: #fff;
+  }
+  details.faq-item summary {
+    font-weight: 600;
+    color: var(--navy);
+    cursor: pointer;
+    list-style: none;
+  }
+  details.faq-item summary::-webkit-details-marker { display: none; }
+  details.faq-item summary::before { content: "+ "; color: var(--blue); }
+  details.faq-item[open] summary::before { content: "\2212 "; }
+  details.faq-item p { margin: 12px 0 0; font-size: 0.95rem; }
 </style>
 </head>
 <body>
@@ -296,6 +313,22 @@
       <button type="button" class="sh-gallery-thumb" data-gallery-thumb aria-label="View photo 12: Holding accessories by D-ring, close-up"><img src="assets/speediance-inplace-drings-1.jpg" alt=""></button>
       <button type="button" class="sh-gallery-thumb" data-gallery-thumb aria-label="View photo 13: Holding accessories by D-ring, side angle"><img src="assets/speediance-inplace-drings-2.jpg" alt=""></button>
     </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap wrap-narrow">
+    <div class="section-head">
+      <h2>Frequently Asked Questions</h2>
+    </div>
+    <details class="faq-item">
+      <summary>Can I attach accessories directly with the D-ring, or do I need a carabiner?</summary>
+      <p>Speediance accessories typically come with a D-ring or square ring already attached for connecting to the cable. On an earlier design, attaching that ring directly to the mount left less finger clearance around the bolt and nut. Using a carabiner as a go-between fixes this — clip the carabiner to the mount once, then swap accessories by opening and closing the carabiner's gate instead of handling the ring directly. The redesigned version (current listings) has added clearance and works fine either way.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Why does the Gym Monster clip use a bolt instead of tape?</summary>
+      <p>All 3D printed clips relax their grip a bit over time under stress — it's just how plastic behaves. Many competitors use double-sided tape to compensate. It's not that I don't trust tape — it's just a pain to work with: it doesn't always look great, it's hard to reposition once placed, and it leaves residue behind. A bolt avoids all of that. If it ever feels loose, just hand-tighten it a bit, no tools needed. A hook may also sag very slightly over time depending on load, especially in a hot garage in summer.</p>
+    </details>
   </div>
 </section>
 
