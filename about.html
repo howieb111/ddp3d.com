@@ -29,6 +29,30 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<style>
+  .materials-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 18px; }
+  .materials-list li { font-size: 0.98rem; line-height: 1.6; }
+  .materials-list strong { color: var(--navy); }
+  .care-block { margin-top: 28px; }
+  .care-block h3 { font-family: 'Poppins', sans-serif; font-size: 1.15rem; color: var(--navy); margin: 0 0 10px; }
+  details.faq-item {
+    border: 1.5px solid rgba(140, 136, 128, 0.35);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    background: #fff;
+  }
+  details.faq-item summary {
+    font-weight: 600;
+    color: var(--navy);
+    cursor: pointer;
+    list-style: none;
+  }
+  details.faq-item summary::-webkit-details-marker { display: none; }
+  details.faq-item summary::before { content: "+ "; color: var(--blue); }
+  details.faq-item[open] summary::before { content: "\2212 "; }
+  details.faq-item p { margin: 12px 0 0; font-size: 0.95rem; }
+</style>
 </head>
 <body>
 
@@ -101,8 +125,68 @@
       <div class="value-label">Print</div>
       <p>Produced on demand — sold direct, or released for anyone to print themselves.</p>
     </div>
+    <div class="value-item">
+      <div class="value-label">Sustain</div>
+      <p>Filament comes from refills and cardboard spools, not new plastic. Orders ship plastic-free where possible, and materials are sourced from the US whenever we can.</p>
+    </div>
   </div>
 </div>
+
+<section class="section" id="materials">
+  <div class="wrap wrap-narrow">
+    <div class="section-head">
+      <h2>About the Prints &amp; Materials</h2>
+    </div>
+    <h3 style="font-family:'Poppins',sans-serif;color:var(--navy);">About the prints</h3>
+    <p>3D prints aren't injection molded. They're built by melting filament and laying it down in lines, layer by layer, through a nozzle — that's Fused Deposition Modeling (FDM). Because of that, visible layer lines are a normal part of how the part was made, and they can be more noticeable on certain curved surfaces.</p>
+    <p>Sometimes I tweak a design specifically so it prints better. A shallow curve that starts right at the bottom of a print, on the first layer, is a good example — the layers need to bond to each other, and a shallow curve makes that bond nearly impossible. To fix it, I'll either reorient the part so the curve doesn't start on the very first layer, or start the curve with a sharp 45-degree chamfer and transition into the curve from there. I used this technique on the rearmost pin of the Large Gym Monster Accessory Mount, and on the Bicycle Flag Holder. It's just part of designing for FDM manufacturing.</p>
+    <p>Good design should work on more than one level, not just be functional. The stripping basket's drain holes are a good example — they're raindrop-shaped rather than plain circles, and that shape does three jobs at once. Functionally, it stays smooth enough that fishing line won't catch or fray passing through. For printing, a pointed top lets the hole bridge cleanly in a vertical print without sagging or needing support, the way a plain circle would if printed on its side. And aesthetically, it reads as intentional rather than incidental — like it was designed, not just cut out. That's the standard I hold every part to: solve the functional problem, print cleanly, and look good — all three, not one traded off for another.</p>
+
+    <h3 style="font-family:'Poppins',sans-serif;color:var(--navy);margin-top:32px;">Materials</h3>
+    <p>I use a few different filaments, each chosen for where a part will actually be used:</p>
+    <ul class="materials-list">
+      <li><strong>PETG</strong> — my default for most everyday functional parts. It's tough and impact-resistant, holds up well to daily handling, and bonds cleanly between layers, which makes for a strong, reliable part.</li>
+      <li><strong>ABS</strong> — used for anything that sees repeated heat, like sitting in a hot car. It's the same material used in most injection-molded automotive interior plastic.</li>
+      <li><strong>ASA</strong> — the default for the stripping basket, where saltwater and UV durability matter more than color choice. Available as an upgrade in limited colors (currently black) on other outdoor parts, like the bicycle flag mount, for anyone who wants extra weather resistance and doesn't mind the color tradeoff. Same strength as ABS, with far better resistance to fading and sun degradation than PETG over years of exposure.</li>
+      <li><strong>PLA</strong> — used where fine detail and a smooth finish matter, like the embossed/debossed logos on the freestanding card holders. PLA holds crisper detail and a cleaner surface than PETG, which is exactly why it's the right material there. With good design — rounded fillets instead of sharp corners, and the right print orientation — it holds up perfectly well for everyday use. Its one real limit is heat, not toughness: it softens around 55–60°C, so it's suited to normal indoor use, not a hot car or sunny windowsill.</li>
+    </ul>
+
+    <div class="care-block">
+      <h3>Long-term care</h3>
+      <p>All 3D printed parts under stress will relax a little over time — it depends on the filament and how much stress the part is under. That's actually why the Gym Monster Accessory Holder clip uses a bolt instead of relying only on the printed grip: over time, a purely friction-fit clip will loosen. A lot of competitors handle this with double-sided tape, but tape has its own downsides in practice — it doesn't always look great, it's hard to reposition once placed, and it leaves residue behind. A bolt sidesteps all of that. If you ever notice the clip getting a little loose, just hand-tighten it, no tools needed.</p>
+      <p>You might also notice a hook sag very slightly in one direction over time, depending on how weight is distributed on it. This may never happen, or you may never notice it if it does — it's more likely if the mount lives somewhere hot, like a garage in summer.</p>
+    </div>
+
+    <div class="care-block">
+      <h3>Cleaning &amp; care</h3>
+      <p>Most parts just need a rinse with water and a mild soap if they get dirty — no special cleaners needed. Avoid harsh solvents (acetone, brake cleaner, etc.), which can cloud or craze PETG and ABS parts, and skip the dishwasher — sustained heat can warp a printed part even if the plastic itself is heat-tolerant in normal use. For anything with a bolt (like the Gym Monster clip), an occasional hand-tighten is the only maintenance it needs; no oiling or lubrication required. If you've chosen the ASA option for extra outdoor durability (or have the stripping basket, which is ASA by default), no added UV protection is needed — that's exactly what ASA is for. Standard PETG parts hold up fine outdoors too, just with a longer-term fade timeline than ASA.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt" id="faq">
+  <div class="wrap wrap-narrow">
+    <div class="section-head">
+      <h2>Frequently Asked Questions</h2>
+    </div>
+    <details class="faq-item">
+      <summary>Can I attach accessories directly with the D-ring, or do I need a carabiner?</summary>
+      <p>Speediance accessories typically come with a D-ring or square ring already attached for connecting to the cable. On an earlier design, attaching that ring directly to the mount left less finger clearance around the bolt and nut. Using a carabiner as a go-between fixes this — clip the carabiner to the mount once, then swap accessories by opening and closing the carabiner's gate instead of handling the ring directly. The redesigned version (current listings) has added clearance and works fine either way.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Why do my 3D printed parts have visible layer lines?</summary>
+      <p>3D printing works by melting filament and laying it down in layers, not injection molding, so visible layer lines are normal — especially on curved surfaces. I design around this where I can; the rearmost pin on the Large Gym Monster mount and the Bicycle Flag Holder both use a 45-degree chamfer instead of a shallow curve starting on the first layer, since that curve wouldn't bond well between layers otherwise.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Why does the Gym Monster clip use a bolt instead of tape?</summary>
+      <p>All 3D printed clips relax their grip a bit over time under stress — it's just how plastic behaves. Many competitors use double-sided tape to compensate. It's not that I don't trust tape — it's just a pain to work with: it doesn't always look great, it's hard to reposition once placed, and it leaves residue behind. A bolt avoids all of that. If it ever feels loose, just hand-tighten it a bit, no tools needed. A hook may also sag very slightly over time depending on load, especially in a hot garage in summer.</p>
+    </details>
+    <details class="faq-item">
+      <summary>What filaments do you use, and why?</summary>
+      <p>PETG for most everyday parts — tough, impact-resistant, bonds well between layers. PLA where fine detail and a smooth finish matter, like embossed logos — with good design (rounded corners, the right print orientation) it holds up fine for everyday use; its real limit is heat, softening around 55–60°C, not toughness. ABS for anything exposed to repeated heat, like a hot car, since it's the same material used in most injection-molded car interior plastic. ASA for outdoor items like the stripping basket — as strong as ABS, with much better UV resistance so it won't fade or degrade in the sun.</p>
+    </details>
+  </div>
+</section>
 
 <footer class="site-footer" id="contact">
   <div class="wrap">
