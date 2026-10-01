@@ -92,7 +92,7 @@
         <div class="card-tag tag-live">Ready to ship</div>
         <h3>Speediance Gym Monster Accessory Mount Pair</h3>
         <p>A bolt-on clamp pair that holds your barbell, rowing bar, and hooks for handles, ropes and straps, all in one mount — no tape or adhesive.</p>
-        <p class="card-colors">Colors: black &middot; gray &middot; red &middot; blue &middot; orange &middot; green &middot; from $27.20 (15% off through Oct 15, reg. $32)</p>
+        <p class="card-colors">Colors: black &middot; gray &middot; red &middot; blue &middot; orange &middot; green &middot; <span data-speediance-from>from $32</span></p>
         <span class="card-link">View product →</span>
       </a>
 
@@ -224,6 +224,17 @@
 
 <script src="assets/cart.js"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script>
+  // Opening sale: 15% off Speediance mounts through Oct 15, 2026 — mirrors
+  // SALE_END on speediance-gym-monster-mounts.html and the Worker's
+  // SPEEDIANCE_SALE_END. Page shows the regular price by default; this swaps
+  // in the sale text only while the sale is on. Safe to delete after Oct 15.
+  (function () {
+    var SALE_END = new Date('2026-10-16T03:59:59Z'); // end of Oct 15, America/New_York (UTC-4)
+    var el = document.querySelector('[data-speediance-from]');
+    if (el && new Date() <= SALE_END) el.textContent = 'from $27.20 (15% off through Oct 15, reg. $32)';
+  })();
+</script>
 <script>
   document.querySelectorAll('.nav-item').forEach(function (item) {
     var dropdown = item.querySelector('.nav-dropdown');
