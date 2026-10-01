@@ -86,6 +86,9 @@
   .sh-qty-row { display: flex; align-items: center; gap: 14px; margin-top: 20px; flex-wrap: wrap; }
   .sh-qty-row input[type="number"] { width: 72px; padding: 10px; border: 1.5px solid rgba(140, 136, 128, 0.4); border-radius: 8px; font-size: 0.95rem; }
   .sh-price { font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--navy); margin: 0 0 4px; }
+  .sh-price-strike { font-family: 'Work Sans', sans-serif; font-size: 0.6em; font-weight: 500; color: var(--gray); text-decoration: line-through; margin-right: 8px; }
+  .sh-sale-note { font-size: 0.82rem; color: var(--terracotta); font-weight: 600; margin: 0 0 14px; }
+  .sh-radio-row .sh-price-strike { font-size: 0.85em; margin-right: 4px; }
   .sh-status { margin-top: 12px; font-size: 0.88rem; font-weight: 600; display: none; }
   .sh-status.ok { color: #1e4d28; display: block; }
   .sh-status.err { color: #a33; display: block; }
@@ -187,17 +190,19 @@
     </div>
     <div>
       <div class="card-tag tag-live">Ready to ship</div>
+      <div class="card-tag tag-free" data-sale-tag style="display:none;">15% Off — Opening Sale</div>
       <h2>Speediance Gym Monster Accessory Mount Pair</h2>
       <p>Sold as a left and right pair. Every size includes the bolt-on clamp, barbell + rowing bar holder, and hook sets — Medium and Large add the barbell foam pad holder. Made for the Gym Monster.</p>
-      <p class="sh-price" data-price>$54.00</p>
+      <p class="sh-price"><span data-price-strike></span><span data-price>$54.00</span></p>
+      <p class="sh-sale-note" data-sale-note style="display:none;">Opening sale — 15% off through October 15</p>
 
       <div class="sh-options" data-product="speediance">
         <div class="sh-option-group">
           <label class="group-label">Size</label>
           <div class="sh-radio-row">
-            <label><input type="radio" name="speediance-size" value="small"> Small — 1 hook set — $32</label>
-            <label><input type="radio" name="speediance-size" value="medium"> Medium — 2 hook sets — $43</label>
-            <label><input type="radio" name="speediance-size" value="large" checked> Large — 3 hook sets — $54</label>
+            <label><input type="radio" name="speediance-size" value="small"> Small — 1 hook set — <span data-size-price="small">$32</span></label>
+            <label><input type="radio" name="speediance-size" value="medium"> Medium — 2 hook sets — <span data-size-price="medium">$43</span></label>
+            <label><input type="radio" name="speediance-size" value="large" checked> Large — 3 hook sets — <span data-size-price="large">$54</span></label>
           </div>
           <p class="sh-size-blurb" data-size-blurb></p>
         </div>
@@ -428,6 +433,17 @@
   (function () {
     // Mirrors the Worker's SPEEDIANCE_SIZE_PRICES — keep these in sync.
     var PRICES = { small: 32, medium: 43, large: 54 };
+    // Opening sale: 15% off through Oct 15, 2026 — mirrors the Worker's
+    // SPEEDIANCE_SALE_END / speedianceSalePrice(). Remove both blocks (or
+    // just let the date pass) once the sale ends.
+    var SALE_END = new Date('2026-10-16T03:59:59Z'); // end of Oct 15, America/New_York (UTC-4)
+    var SALE_ACTIVE = new Date() <= SALE_END;
+    function salePrice(base) {
+      return Math.round(base * 0.85 * 100) / 100;
+    }
+    function fmt(n) {
+      return '$' + n.toFixed(2);
+    }
     var BLURBS = {
       small: "Best if you hang just a few of the included accessories, directly by their D-rings.",
       medium: 'Best if you use carabiners, and want a spot for the barbell foam pad.',
@@ -446,6 +462,10 @@
 
     var group = document.querySelector('.sh-options');
     var priceEl = document.querySelector('[data-price]');
+    var priceStrikeEl = document.querySelector('[data-price-strike]');
+    var saleTagEl = document.querySelector('[data-sale-tag]');
+    var saleNoteEl = document.querySelector('[data-sale-note]');
+    var sizePriceEls = document.querySelectorAll('[data-size-price]');
     var sizeRadios = group.querySelectorAll('input[name="speediance-size"]');
     var sizeBlurbEl = group.querySelector('[data-size-blurb]');
     var colorSelect = group.querySelector('[data-color]');
@@ -480,7 +500,28 @@
     }
 
     function updatePrice() {
-      priceEl.textContent = '$' + PRICES[currentSize()] + '.00';
+      var base = PRICES[currentSize()];
+      if (SALE_ACTIVE) {
+        priceStrikeEl.innerHTML = '<span class="sh-price-strike">' + fmt(base) + '</span>';
+        priceEl.textContent = fmt(salePrice(base));
+      } else {
+        priceStrikeEl.innerHTML = '';
+        priceEl.textContent = fmt(base);
+      }
+    }
+    function updateSizeOptionPrices() {
+      sizePriceEls.forEach(function (el) {
+        var base = PRICES[el.getAttribute('data-size-price')];
+        if (SALE_ACTIVE) {
+          el.innerHTML = '<span class="sh-price-strike">' + fmt(base) + '</span>' + fmt(salePrice(base));
+        } else {
+          el.textContent = fmt(base);
+        }
+      });
+      if (SALE_ACTIVE) {
+        saleTagEl.style.display = '';
+        saleNoteEl.style.display = '';
+      }
     }
     function updateSizeBlurb() {
       sizeBlurbEl.textContent = BLURBS[currentSize()];
@@ -513,6 +554,7 @@
 
     populateColors();
     updateColorPreview();
+    updateSizeOptionPrices();
     updateAll();
 
     (function () {
