@@ -76,6 +76,13 @@
 
 <script src="assets/cart.js"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script>
+  // Payment finished: now it's safe to empty the cart (it is no longer cleared
+  // when checkout starts, so backing out of Stripe keeps the cart intact).
+  fetch('/api/cart/clear', { method: 'POST', credentials: 'same-origin' })
+    .then(function () { if (window.ddp3dCart) window.ddp3dCart.refreshBadge(); })
+    .catch(function () {});
+</script>
 
 </body>
 </html>
