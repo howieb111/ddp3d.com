@@ -92,6 +92,9 @@
           <div id="shipping-form" style="margin-top:16px;">
             <label class="group-label" style="display:block; font-size:0.82rem; font-weight:600; color:var(--navy); margin-bottom:8px;">Shipping address</label>
             <div class="form-field" style="margin-bottom:10px;">
+              <input type="text" id="ship-name" placeholder="Full name" autocomplete="name">
+            </div>
+            <div class="form-field" style="margin-bottom:10px;">
               <input type="text" id="ship-street" placeholder="Street address">
             </div>
             <div class="form-field" style="margin-bottom:10px;">
@@ -463,7 +466,21 @@
       checkoutError.style.display = 'none';
       checkoutBtn.disabled = true;
       checkoutBtn.textContent = 'Redirecting to secure checkout…';
-      fetch(API_BASE + '/checkout', { method: 'POST', credentials: 'same-origin' })
+      // Pass the address already entered for the shipping quote so Stripe
+      // Checkout can prefill it instead of asking again.
+      var shipTo = {
+        name: document.getElementById('ship-name').value.trim(),
+        street: document.getElementById('ship-street').value.trim(),
+        city: document.getElementById('ship-city').value.trim(),
+        state: document.getElementById('ship-state').value.trim(),
+        zip: document.getElementById('ship-zip').value.trim()
+      };
+      fetch(API_BASE + '/checkout', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(shipTo)
+      })
         .then(function (res) {
           if (!res.ok) return res.json().then(function (err) { throw new Error(err.error || 'Checkout failed'); });
           return res.json();
